@@ -4,29 +4,50 @@
 
         private $codeArray;
         private $errors;
-
-
         private $positions;
-        private $numPositions;
+        private $numTimes;
         private $flag;
         private $numCodeLines;
-
+        private $position;
 
         public function __construct($code){
             $this->setCodearray($code);
             $this->setPositions();
             $this->setCodeLines();
-
+            $this->setCont(0);
         }
 
+        public function setPosition($position)
+        {
+            $this->position = $position;
+        }
+
+        public function getPosition()
+        {
+            return $this->position;
+        }
 
         public function verify(){
+            $this->setTimes(sizeof($this->getPositions()));
 
-            $this->checkBottom($this->codeArray, $this);
+            for ($i=0; $this->getTimes(); $i++){
+                 $this->setPosition($this->getPositions()[$i]-1);
+                 $this->checkBottom();
+            }
+
         }
 
         private function checkBottom(){
-
+            if (preg_match('/^([\s]*)(\*\/)$/', $this->getCodeArray()[$this->getPosition()])){
+                $this->setPosition($this->getPosition()-1);
+                $this->checkMiddle();
+            }
+            else {
+                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition()+1 . ', esta mal comentada =>
+                '. $this->getArrayCode()[$this->getPosition()+1]);
+                // echo "<p>No entra A -" . $str[$i] . "-</p>" . $i;
+                //echo '<div class="error">La l&iacutenea n&uacutemero  ' .($i+1). ', esta mal comentada =>  '.$str[$i+1].'</div>' ;
+            }
         }
         private function checkMiddle(){
 
@@ -49,14 +70,13 @@
 
         public function setNumCodeLines()
         {
-            $this->numCodeLines = sizeof($this->codeArray);
+            $this->numCodeLines = sizeof($this->getCodeArray());
         }
 
         public function getNumCodeLines()
         {
             return $this->numCodeLines;
         }
-
 
         public function setCodeArray($codeArray)
         {
@@ -70,7 +90,7 @@
 
         public function setErrors($errors)
         {
-            $this->errors = $errors;
+            $this->errors[] = $errors;
         }
 
         public function getErrors()
@@ -78,9 +98,9 @@
             return $this->errors;
         }
 
-        public function setFlag($flag, $cont)
+        public function setFlag()
         {
-            $this->flag = $flag + $cont;
+            $this->flag = $this->getFlag() + 1;
         }
 
         public function getFlag()
@@ -91,11 +111,11 @@
         public function setPositions()
         {
 
-            for ($i=0;$i<$this->codeLines;$i++){
-                if (strpos($this->codeArray[$i], 'Class') !== false || strpos($this->codeArray, 'public') !== false
-                    || strpos($this->codeArray[$i], 'function') !== false || strpos($this->codeArray[$i], 'static') !== false
-                    || strpos($this->codeArray[$i], 'private') !== false){
-                    $this->Postitions[] = $i;
+            for ($i=0;$i<$this->getNumCodeLines();$i++){
+                if (strpos($this->getCodeArray()[$i], 'Class') !== false || strpos($this->getCodeArray()[$i], 'public') !== false
+                    || strpos($this->getCodeArray()[$i], 'function') !== false || strpos($this->getCodeArray()[$i], 'static') !== false
+                    || strpos($this->getCodeArray()[$i], 'private') !== false){
+                    $this->positions[] = $i;
                 }
             }
         }
@@ -105,14 +125,14 @@
             return $this->positions;
         }
 
-        public function setNumPositions($numPositions)
+        public function setNumTimes($numTimes)
         {
-            $this->numPositions = $numPositions;
+            $this->numTimes = $numTimes;
         }
 
-        public function getNumPositions()
+        public function getNumTimes()
         {
-            return $this->numPositions;
+            return $this->numTimes;
         }
 
     }
