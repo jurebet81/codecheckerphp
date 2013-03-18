@@ -12,46 +12,65 @@
 
         public function __construct($code){
             $this->setCodearray($code);
+            $this->setNumCodeLines();
             $this->setPositions();
-            $this->setCodeLines();
-            $this->setCont(0);
-        }
-
-        public function setPosition($position)
-        {
-            $this->position = $position;
-        }
-
-        public function getPosition()
-        {
-            return $this->position;
         }
 
         public function verify(){
-            $this->setTimes(sizeof($this->getPositions()));
+            $this->setNumTimes(sizeof($this->getPositions()));
 
-            for ($i=0; $this->getTimes(); $i++){
-                 $this->setPosition($this->getPositions()[$i]-1);
-                 $this->checkBottom();
+            for ($i=0;$i<$this->getNumTimes();$i++){
+                $this->setPosition($this->positions[$i]-1);
+                $this->setFlag(0);
+                $this->checkBottom();
             }
 
         }
 
         private function checkBottom(){
-            if (preg_match('/^([\s]*)(\*\/)$/', $this->getCodeArray()[$this->getPosition()])){
+            if (preg_match('/^([\s]*)(\*\/)$/', $this->codeArray[$this->getPosition()])){
                 $this->setPosition($this->getPosition()-1);
                 $this->checkMiddle();
             }
             else {
-                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition()+1 . ', esta mal comentada =>
-                '. $this->getArrayCode()[$this->getPosition()+1]);
+                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition()+1 . ', esta mal comentada => '
+                . $this->codeArray[$this->getPosition()+1]);
                 // echo "<p>No entra A -" . $str[$i] . "-</p>" . $i;
                 //echo '<div class="error">La l&iacutenea n&uacutemero  ' .($i+1). ', esta mal comentada =>  '.$str[$i+1].'</div>' ;
             }
         }
         private function checkMiddle(){
 
+            if (((preg_match("/^([\s]*)(\*).*/", $this->codeArray[$this->getPosition()])) == true) &&
+                (strpos($this->codeArray[$this->getPosition()], "*/") === false)){
+                $this->setFlag($this->getFlag()+1);
+                $this->setPosition($this->getPosition()-1);
+                $this->checkMiddle();
+            }
+            else if ((preg_match("!^([\s]*)/[*]{2}$!", $this->codeArray[$this->getPosition()])== true) &&
+                ($this->getFlag() > 0)){
+                $this->checkTop();
+            }else {
+                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition() . ', esta mal comentada => '
+                . $this->codeArray[$this->getPosition()]);
+                //echo "No entra B" . $i;
+                //echo '<div class="error">La l&iacutenea n&uacutemero  ' .($i). ', esta mal comentada =>  ' . $str[$i] . '</div>' ;
+            }
+
         }
+
+        private function setPositions()
+        {
+
+            for ($i=0;$i<$this->getNumCodeLines();$i++){
+                if (strpos($this->codeArray[$i], 'Class') !== false || strpos($this->codeArray[$i], 'public') !== false
+                    || strpos($this->codeArray[$i], 'function') !== false || strpos($this->codeArray[$i], 'static') !== false
+                    || strpos($this->codeArray[$i], 'private') !== false){
+                    $this->positions[] = $i;
+                }
+            }
+        }
+
         private function checkTop(){
 
         }
@@ -66,6 +85,16 @@
         }
         private function checkProportion(){
 
+        }
+
+        public function setPosition($position)
+        {
+            $this->position = $position;
+        }
+
+        public function getPosition()
+        {
+            return $this->position;
         }
 
         public function setNumCodeLines()
@@ -98,26 +127,14 @@
             return $this->errors;
         }
 
-        public function setFlag()
+        public function setFlag($flag)
         {
-            $this->flag = $this->getFlag() + 1;
+            $this->flag = $flag;
         }
 
         public function getFlag()
         {
             return $this->flag;
-        }
-
-        public function setPositions()
-        {
-
-            for ($i=0;$i<$this->getNumCodeLines();$i++){
-                if (strpos($this->getCodeArray()[$i], 'Class') !== false || strpos($this->getCodeArray()[$i], 'public') !== false
-                    || strpos($this->getCodeArray()[$i], 'function') !== false || strpos($this->getCodeArray()[$i], 'static') !== false
-                    || strpos($this->getCodeArray()[$i], 'private') !== false){
-                    $this->positions[] = $i;
-                }
-            }
         }
 
         public function getPositions()

@@ -11,5 +11,5 @@ include 'CommentCheckClass.php';
 $code = "blahblahbla";
 $codec = new CommentCheck($code);
 $codec->verify();
-print_r($codec->getErrors();
+print_r($codec->getErrors());
 
