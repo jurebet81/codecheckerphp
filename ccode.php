@@ -8,7 +8,7 @@
  */
 include 'CommentCheckClass.php';
 
-echo "hola";
+
 $arg0 = $argv[0];
 $arg1 = $argv[1];
 $numArgs = sizeof($argv) - 1;
