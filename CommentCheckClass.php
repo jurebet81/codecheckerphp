@@ -18,45 +18,39 @@
 
         public function verify(){
             $this->setNumTimes(sizeof($this->getPositions()));
-
             for ($i=0;$i<$this->getNumTimes();$i++){
                 $this->setPosition($this->positions[$i]-1);
-                $this->setFlag(0);
                 $this->checkBottom();
             }
 
         }
 
         private function checkBottom(){
-            if (preg_match('/^([\s]*)(\*\/)$/', $this->codeArray[$this->getPosition()])){
+            $this->setFlag(0);
+            if (preg_match('/^([\s]*)(\*)+.*/', $this->codeArray[$this->getPosition()])){
                 $this->setPosition($this->getPosition()-1);
                 $this->checkMiddle();
             }
             else {
-                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition()+1 . ', esta mal comentada => '
-                . $this->codeArray[$this->getPosition()+1]);
-                // echo "<p>No entra A -" . $str[$i] . "-</p>" . $i;
-                //echo '<div class="error">La l&iacutenea n&uacutemero  ' .($i+1). ', esta mal comentada =>  '.$str[$i+1].'</div>' ;
+                $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
+                . $this->codeArray[$this->getPosition()]);
             }
         }
         private function checkMiddle(){
 
-            if (((preg_match("/^([\s]*)(\*).*/", $this->codeArray[$this->getPosition()])) == true) &&
-                (strpos($this->codeArray[$this->getPosition()], "*/") === false)){
+            if ((preg_match('/^([\s]*)(\*)+(.)*/', $this->codeArray[$this->getPosition()]))
+                && (strpos($this->codeArray[$this->getPosition()], "*/") === false)){
                 $this->setFlag($this->getFlag()+1);
                 $this->setPosition($this->getPosition()-1);
                 $this->checkMiddle();
             }
-            else if ((preg_match("!^([\s]*)/[*]{2}$!", $this->codeArray[$this->getPosition()])== true) &&
-                ($this->getFlag() > 0)){
+            else if(preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ($this->getFlag()>0)){
                 $this->checkTop();
-            }else {
-                $this->setErrors('La l&iacutenea n&uacutemero  ' . $this->getPosition() . ', esta mal comentada => '
-                . $this->codeArray[$this->getPosition()]);
-                //echo "No entra B" . $i;
-                //echo '<div class="error">La l&iacutenea n&uacutemero  ' .($i). ', esta mal comentada =>  ' . $str[$i] . '</div>' ;
             }
-
+            else {
+                $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
+                . $this->codeArray[$this->getPosition()]);
+            }
         }
 
         private function setPositions()
@@ -109,9 +103,8 @@
 
         public function setCodeArray($codeArray)
         {
-            $this->codeArray = preg_split("/[(\r\n)]+/",$codeArray);
+            $this->codeArray = preg_split("/[(\r)]+/",$codeArray);
         }
-
         public function getCodeArray()
         {
             return $this->codeArray;
