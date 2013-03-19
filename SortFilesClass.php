@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Created by JetBrains PhpStorm.
  * User: User
  * Date: 3/18/13
  * Time: 8:27 PM
  * To change this template use File | Settings | File Templates.
- */
+*/
 class SortFiles
 {
     private $fileArray;
@@ -16,6 +17,7 @@ class SortFiles
     private $messages;
     private $arguments;
     private $totArguments;
+    private $filesAux;
 
     public function __construct($args){
         $this->setArguments($args);
@@ -31,11 +33,9 @@ class SortFiles
             if ($this->arguments[1] == "f"){
                 $this->orderByFiles($this->getArguments());
                 echo "files";
-
             } else if ($this->arguments[1] == "d") {
                 echo "directory";
                 $this->orderByDirectory($this->getArguments());
-
             }else {
                 $this->setMessages("Parametro no valido");
             }
@@ -52,18 +52,15 @@ class SortFiles
     private function loadPhpFiles($files){
         for ($i=0;$i<$this->getTotFiles();$i++){
             if (preg_match('/^(.)+\.(php)$/', $files[$i])){
-
                 $this->setFilePhpArray($files[$i]);
             }
         }
-
         $this->setTotPhpFiles(sizeof($this->getFilePhpArray()));
-
     }
 
     private function orderByDirectory($directory){
         if (is_dir($directory[2])){
-            $this->setDirPath($directory[2]);
+            $this->setDirPath($directory[2] . "/");
             $this->loadAllFiles($this->getDirPath());
             $this->loadPhpFiles($this->getFileArray());
         }else{
@@ -72,14 +69,22 @@ class SortFiles
     }
 
     private function orderByFiles($files){
+        $this->setDirPath("");
         for ($i=2;$i<$this->getTotArguments(); $i++){
-            $files = $files[$i];
+            echo $files[$i];
+            if (is_file($files[$i])) {
+                $this->setFilesAux($files[$i]);
+            }else{
+                $this->setMessages($files[$i] . " No es un archivo");
+            }
         }
-        $this->setTotFiles(sizeof($files));
-        $this->setFileArray($files);
-        $this->loadPhpFiles($files);
-
-
+        if (sizeof($this->getFilesAux())>0){
+            $this->setTotFiles(sizeof($this->getFilesAux()));
+            $this->setFileArray($this->getFilesAux());
+            $this->loadPhpFiles($this->getFilesAux());
+        }else{
+            $this->setMessages("Hubo un error obteniendo los archivos a analizar");
+        }
     }
 
     public function setFileArray($fileArray)
@@ -160,5 +165,14 @@ class SortFiles
     public function getFilePhpArray()
     {
         return $this->filePhpArray;
+    }
+    public function setFilesAux($filesAux)
+    {
+        $this->filesAux[] = $filesAux;
+    }
+
+    public function getFilesAux()
+    {
+        return $this->filesAux;
     }
 }

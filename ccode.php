@@ -13,7 +13,7 @@ include 'SortFilesClass.php';
     $sortFiles->startSorting();
     if (sizeof($sortFiles->getMessages())==0){
         for ($i=0;$i<$sortFiles->getTotPhpFiles();$i++){
-            $ccode = new CommentCheck(file_get_contents($sortFiles->getDirPath() . "/" .$sortFiles->filePhpArray[$i]));
+            $ccode = new CommentCheck(file_get_contents($sortFiles->getDirPath() .$sortFiles->filePhpArray[$i]));
             $ccode->verify();
             if (sizeof($ccode->getErrors()) > 0){
                 echo "\n The file: " . $sortFiles->filePhpArray[$i] . " has the following errors: ";
