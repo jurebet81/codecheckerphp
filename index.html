@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>proyecto</title>
+        <link rel="stylesheet" href="diseno.css" type="text/css" />
+    </head>
+	<body>
+		<div id="container">
+			<div id="intro">
+				<div id="pageHeader">
+					<h1><span>CODE COMMENTS CHECKER</span></h1>
+				</div>
+				<div id="quickSummary">
+					<p class="p1"><span>Este programa evalua el uso adecuado de comentarios en archivos PHP.</span></p>
+					<p class="p2"><span>Desarrollado por Andrea,Julian,Horti,Manuel y Marcela</span></p>
+				</div>
+				<div id="result">
+					<form method="post" action="index.php" enctype="multipart/form-data" name="form1">
+						<fieldset>
+							<legend>Select file from your computer</legend>
+							<input type="file" name="file" id="file" />
+						</fieldset>
+						<p>or </p>
+						<fieldset>
+							<legend> Copy your code here </legend>
+							<textarea name="code"></textarea>
+						</fieldset>
+						<br><br>
+						<fieldset>
+							<legend> Options </legend>
+								<div>
+									<input type="checkbox" name="methods" value="methods" />methods
+									<input type="checkbox" name="classes" value="classes" />classes <br>
+									<input type="checkbox" name="tagauthor" value="tagauthor" />tag author
+									<input type="checkbox" name="tagreturn" value="tagreturn" />tag return
+								</div>
+							<input type="submit" value="Send" name="submit" id="button" />
+						</fieldset>
+					</form>
+				</div>
+				<div id="footer"> <a href="http://www.eia.edu.co" title="Universidad">Escuela de Ingenieria de Antioquia</a></div>
+			</div>
+		</div>
+	</body>
+</html>
+
+
