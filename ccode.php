@@ -11,13 +11,13 @@ include 'SortFilesClass.php';
 
     $sortFiles = new SortFiles($argv);
     $sortFiles->startSorting();
-    if (sizeof($sortFiles->getMessages())==0){
-        for ($i=0;$i<$sortFiles->getTotPhpFiles();$i++){
-            $ccode = new CommentCheck(file_get_contents($sortFiles->getDirPath() .$sortFiles->filePhpArray[$i]));
+    if ( sizeof( $sortFiles->getMessages()) == 0){
+        for ( $i = 0; $i < $sortFiles->getTotPhpFiles(); $i++){
+            $ccode = new CommentCheck( file_get_contents( $sortFiles->getDirPath() .$sortFiles->filePhpArray[$i]));
             $ccode->verify();
-            if (sizeof($ccode->getErrors()) > 0){
+            if ( sizeof( $ccode->getErrors()) > 0){
                 echo "\n The file: " . $sortFiles->filePhpArray[$i] . " has the following errors: ";
-                print_r ($ccode->getErrors());
+                print_r ( $ccode->getErrors());
 
             }else {
                 echo "\n The file: " . $sortFiles->filePhpArray[$i] . " is correctly commented";
@@ -26,6 +26,6 @@ include 'SortFilesClass.php';
         }
 
 }   else{
-        echo print_r($sortFiles->getMessages());
+        echo print_r( $sortFiles->getMessages());
     }
 

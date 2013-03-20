@@ -29,13 +29,13 @@ class SortFiles
     }
 
     public function startSorting(){
-        if ($this->getTotArguments() > 2){
-            if ($this->arguments[1] == "f"){
-                $this->orderByFiles($this->getArguments());
+        if ( $this->getTotArguments() > 2){
+            if ( $this->arguments[1] == "f"){
+                $this->orderByFiles( $this->getArguments());
                 echo "files";
             } else if ($this->arguments[1] == "d") {
                 echo "directory";
-                $this->orderByDirectory($this->getArguments());
+                $this->orderByDirectory( $this->getArguments());
             }else {
                 $this->setMessages("Parametro no valido");
             }
@@ -45,43 +45,43 @@ class SortFiles
     }
 
     private function loadAllFiles($directory){
-        $this->setFileArray(scandir($directory));
-        $this->setTotFiles(sizeof($this->getFileArray())-2);
+        $this->setFileArray( scandir($directory));
+        $this->setTotFiles( sizeof( $this->getFileArray()) - 2);
     }
 
     private function loadPhpFiles($files){
-        for ($i=0;$i<$this->getTotFiles();$i++){
-            if (preg_match('/^(.)+\.(php)$/', $files[$i])){
-                $this->setFilePhpArray($files[$i]);
+        for ( $i = 0; $i < $this->getTotFiles(); $i++){
+            if ( preg_match('/^(.)+\.(php)$/', $files[$i])){
+                $this->setFilePhpArray( $files[$i]);
             }
         }
-        $this->setTotPhpFiles(sizeof($this->getFilePhpArray()));
+        $this->setTotPhpFiles( sizeof( $this->getFilePhpArray()));
     }
 
     private function orderByDirectory($directory){
-        if (is_dir($directory[2])){
-            $this->setDirPath($directory[2] . "/");
-            $this->loadAllFiles($this->getDirPath());
-            $this->loadPhpFiles($this->getFileArray());
+        if ( is_dir( $directory[2])){
+            $this->setDirPath( $directory[2] . "/");
+            $this->loadAllFiles( $this->getDirPath());
+            $this->loadPhpFiles( $this->getFileArray());
         }else{
-            $this->setMessages($directory[2] . " No es un directorio") ;
+            $this->setMessages( $directory[2] . " No es un directorio") ;
         }
     }
 
     private function orderByFiles($files){
         $this->setDirPath("");
-        for ($i=2;$i<$this->getTotArguments(); $i++){
+        for ( $i = 2; $i < $this->getTotArguments(); $i++){
             echo $files[$i];
-            if (is_file($files[$i])) {
-                $this->setFilesAux($files[$i]);
+            if ( is_file( $files[$i])) {
+                $this->setFilesAux( $files[$i]);
             }else{
-                $this->setMessages($files[$i] . " No es un archivo");
+                $this->setMessages( $files[$i] . " No es un archivo");
             }
         }
-        if (sizeof($this->getFilesAux())>0){
-            $this->setTotFiles(sizeof($this->getFilesAux()));
-            $this->setFileArray($this->getFilesAux());
-            $this->loadPhpFiles($this->getFilesAux());
+        if ( sizeof( $this->getFilesAux()) > 0){
+            $this->setTotFiles( sizeof( $this->getFilesAux()));
+            $this->setFileArray( $this->getFilesAux());
+            $this->loadPhpFiles( $this->getFilesAux());
         }else{
             $this->setMessages("Hubo un error obteniendo los archivos a analizar");
         }

@@ -18,8 +18,8 @@
 
         public function verify(){
             $this->setNumTimes(sizeof($this->getPositions()));
-            for ($i=0;$i<$this->getNumTimes();$i++){
-                $this->setPosition($this->positions[$i]-1);
+            for ( $i = 0; $i < $this->getNumTimes(); $i++){
+                $this->setPosition( $this->positions[$i] - 1);
                 $this->checkBottom();
             }
 
@@ -27,8 +27,8 @@
 
         private function checkBottom(){
             $this->setFlag(0);
-            if (preg_match('/^([\s]*)(\*)+.*/', $this->codeArray[$this->getPosition()])){
-                $this->setPosition($this->getPosition()-1);
+            if ( preg_match('/^([\s]*)(\*)+.*/', $this->codeArray[$this->getPosition()])){
+                $this->setPosition( $this->getPosition() - 1);
                 $this->checkMiddle();
             }
             else {
@@ -38,13 +38,13 @@
         }
         private function checkMiddle(){
 
-            if ((preg_match('/^([\s]*)(\*)+(.)*/', $this->codeArray[$this->getPosition()]))
-                && (strpos($this->codeArray[$this->getPosition()], "*/") === false)){
-                $this->setFlag($this->getFlag()+1);
-                $this->setPosition($this->getPosition()-1);
+            if (( preg_match('/^([\s]*)(\*)+(.)*/', $this->codeArray[$this->getPosition()]))
+                && ( strpos( $this->codeArray[$this->getPosition()], "*/") === false)){
+                $this->setFlag( $this->getFlag() + 1);
+                $this->setPosition( $this->getPosition() - 1);
                 $this->checkMiddle();
             }
-            else if(preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ($this->getFlag()>0)){
+            else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
                 $this->checkTop();
             }
             else {
@@ -56,10 +56,10 @@
         private function setPositions()
         {
 
-            for ($i=0;$i<$this->getNumCodeLines();$i++){
-                if (strpos($this->codeArray[$i], 'Class') !== false || strpos($this->codeArray[$i], 'public') !== false
-                    || strpos($this->codeArray[$i], 'function') !== false || strpos($this->codeArray[$i], 'static') !== false
-                    || strpos($this->codeArray[$i], 'private') !== false){
+            for ( $i = 0; $i < $this->getNumCodeLines(); $i++){
+                if ( strpos( $this->codeArray[$i], 'Class') !== false || strpos( $this->codeArray[$i], 'public') !== false
+                    || strpos( $this->codeArray[$i], 'function') !== false || strpos( $this->codeArray[$i], 'static') !== false
+                    || strpos( $this->codeArray[$i], 'private') !== false){
                     $this->positions[] = $i;
                 }
             }
@@ -93,7 +93,7 @@
 
         public function setNumCodeLines()
         {
-            $this->numCodeLines = sizeof($this->getCodeArray());
+            $this->numCodeLines = sizeof( $this->getCodeArray());
         }
 
         public function getNumCodeLines()
@@ -103,7 +103,7 @@
 
         public function setCodeArray($codeArray)
         {
-            $this->codeArray = preg_split("/[(\r)]+/",$codeArray);
+            $this->codeArray = preg_split("/[(\r)]+/", $codeArray);
         }
         public function getCodeArray()
         {
