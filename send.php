@@ -21,6 +21,19 @@ include 'CommentCheckClass.php';
 			
 			$codec = new CommentCheck($code);
 			$codec->verify();
+<<<<<<< HEAD
 			print_r($codec->getErrors());
 	
  
+=======
+                 if(sizeof($codec->getErrors())>0){
+                     print_r($codec->getErrors());
+                 }else {
+                     echo "The file is correctly commented";
+                 }
+			}
+		}
+		
+		$bio = $_POST['code'];
+		echo $bio;
+>>>>>>> 80954c9b92c73b6bb13bf1cf10e0c3e528a6f2e1
