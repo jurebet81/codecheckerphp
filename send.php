@@ -13,7 +13,11 @@ include 'CommentCheckClass.php';
 			$code=file_get_contents($_FILES['file']['tmp_name']);
 			$codec = new CommentCheck($code);
 			$codec->verify();
-			print_r($codec->getErrors());
+                 if(sizeof($codec->getErrors())>0){
+                     print_r($codec->getErrors());
+                 }else {
+                     echo "The file is correctly commented";
+                 }
 			}
 		}
 		

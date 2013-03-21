@@ -46,8 +46,10 @@
             }
             else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
                 $this->checkTop();
+
             }
             else {
+
                 $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
                 . $this->codeArray[$this->getPosition()]);
             }
