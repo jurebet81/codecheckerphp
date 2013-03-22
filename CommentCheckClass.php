@@ -46,7 +46,6 @@
             }
             else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
                 $this->checkTop();
-
             }
             else {
 
@@ -105,7 +104,7 @@
 
         public function setCodeArray($codeArray)
         {
-            $this->codeArray = preg_split("/[(\r\n)]+/", $codeArray);
+            $this->codeArray = preg_split("/[(\r)]+/", $codeArray);
         }
         public function getCodeArray()
         {
