@@ -1,0 +1,83 @@
+
+html {
+	margin: 0;
+	padding: 0;
+	background-color:white;
+	color: rgb(1,43,127);
+	}
+body { 
+	font: 75% georgia, sans-serif;
+	margin: 30; 
+	padding: 30;
+	}
+/* specific divs */
+#container { 
+	/*background: url(zen-bg.jpg) no-repeat top left; */
+	background-color:yellow;
+	/*padding: 48px 175px 0 130px;  */
+	margin: 10px auto;
+	width: 1000px;
+	position: relative;
+	}
+
+#intro { 
+	min-width: 970px;
+	background : white;
+    }
+
+#pageHeader h1 { 
+	/*background:*/rgb(1,43,127); azul eia
+	margin-top: -20px; 
+	width: 1001px; 
+	height: 100px; 
+	float: left;
+	}
+#pageHeader h1 span {
+	font-size : 36pt;
+    font-family : verdana,arial;
+    text-align : center;
+    background-color : white;
+	}
+
+#pageHeader {
+	padding-top: 20px;
+}
+#quickSummary {
+	clear:both; 
+	margin: 20px 20px 20px 166px; 
+	width: 600px; 
+	}
+#quickSummary p {
+	font: italic 10pt/22pt georgia; 
+	text-align:center;
+	font-size : 10pt;
+    background-color : white;
+	}
+#result{
+    font-size : 12pt;
+    font-family : verdana,arial;
+	padding-top: 20px;
+	padding-left: 0px;
+	padding-right: 50px;
+	background-color : white;
+}
+#result fieldset{
+    border:1px solid rgb(119,119,119);
+    font-size : 12pt;
+    font-family : verdana,arial;
+}
+#result input {
+    font-size : 12pt;
+    font-family : verdana,arial;
+}
+
+#footer { 
+	text-align: center; 
+	margin-top: 300px;
+	}
+.estilotextarea {
+	background-color: transparent;
+	width:400px;
+	height:100px;
+	border: 2px 
+	}
