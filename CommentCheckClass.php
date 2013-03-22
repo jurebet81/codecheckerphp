@@ -27,7 +27,7 @@
 
         private function checkBottom(){
             $this->setFlag(0);
-            if ( preg_match('/^([\s]*)(\*)+.*/', $this->codeArray[$this->getPosition()])){
+            if ( preg_match('/^([\s]*)(\*)(\/)$/', $this->codeArray[$this->getPosition()])){
                 $this->setPosition( $this->getPosition() - 1);
                 $this->checkMiddle();
             }
