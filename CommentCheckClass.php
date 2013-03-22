@@ -30,7 +30,7 @@
 
         private function checkBottom(){
             $this->setFlag(0);
-            if ( preg_match('/^([\s]*)(\*)+.*/', $this->codeArray[$this->getPosition()])){
+            if ( preg_match('/^([\s]*)(\*)(\/)$/', $this->codeArray[$this->getPosition()])){
                 $this->setPosition( $this->getPosition() - 1);
                 $this->checkMiddle();
             }
@@ -121,7 +121,7 @@
 
         public function setCodeArray($codeArray)
         {
-            $this->codeArray = preg_split("/(\r\n)/", $codeArray);
+            $this->codeArray = preg_split("/(\n|\r\n)/", $codeArray);
         }
         public function getCodeArray()
         {
