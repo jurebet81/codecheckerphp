@@ -11,16 +11,14 @@ include 'CommentCheckClass.php';
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
                 chmod($_FILES['file']['tmp_name'], 0444);
                 $code=file_get_contents($_FILES['file']['tmp_name']);
-                echo "submitfile";
         }
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
-            echo "submitcode";
     }
     
     $codec = new CommentCheck($code);
     $codec->verify();
-    echo sizeof($codec->getErrors());
+
     if(sizeof($codec->getErrors())>0){
             print_r($codec->getErrors());
     }else {

@@ -104,7 +104,7 @@
 
         public function setCodeArray($codeArray)
         {
-            $this->codeArray = preg_split("/[(\r)]+/", $codeArray);
+            $this->codeArray = preg_split("/(\r\n)/", $codeArray);
         }
         public function getCodeArray()
         {
