@@ -22,6 +22,18 @@ include 'CommentCheckClass.php';
 			$codec = new CommentCheck($code);
 			$codec->verify();
 
+				//$codec = new CommentCheck($code);
+		//$vectorparams = $_POST['checks'];
+		//$numparameters = count($vectorparams);		
+		//if ($numparameters <> 0){
+				//$codec->verify($vectorparams);
+			//}else{
+				//echo 'la perra';
+		//}
+			
+			
+			
+			
 			print_r($codec->getErrors());
 	
                  if(sizeof($codec->getErrors())>0){
@@ -31,8 +43,7 @@ include 'CommentCheckClass.php';
                  }
 			
 		
-		$bio = $_POST['code'];
-		echo $bio;
+		
 
 	//	$codep = new CommentCheck($code);
 		//$codep->verify($_POST['checks']);
