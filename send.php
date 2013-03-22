@@ -34,6 +34,6 @@ include 'CommentCheckClass.php';
 		$bio = $_POST['code'];
 		echo $bio;
 
-		$codep = new CommentCheck($code);
-		$codep->verify($_POST['checks'])
+	//	$codep = new CommentCheck($code);
+		//$codep->verify($_POST['checks']);
 		
