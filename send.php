@@ -15,7 +15,7 @@ include 'CommentCheckClass.php';
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
     }
-    
+    //poner en que tambien se le envien los tags al constructor
     $codec = new CommentCheck($code);
     $codec->verify();
 

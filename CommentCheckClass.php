@@ -9,11 +9,14 @@
         private $flag;
         private $numCodeLines;
         private $position;
+        private $tags;
 
-        public function __construct($code){
+        public function __construct($code,$tags){
             $this->setCodearray($code);
             $this->setNumCodeLines();
             $this->setPositions();
+            $this->setTags($tags);
+            
         }
 
         public function verify(){
@@ -45,12 +48,13 @@
                 $this->checkMiddle();
             }
             else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
-                $this->checkTop();
+                $this->checkTags();
             }
             else {
 
                 $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
                 . $this->codeArray[$this->getPosition()]);
+                
             }
         }
 
@@ -66,12 +70,25 @@
             }
         }
 
-        private function checkTop(){
-
-        }
         private function checkTags(){
 
+		$tagArray = $this->getTags();
+                $position = $this->getPosition();
+		
+		$length= sizeof($this->getTags());
+		
+			for($j=0; $j<$length; $j++) {
+                            if($tagArray[$j]=='title'){
+                                if (!(preg_match('/^([\s]*)(\*)(title|Title)(:).+/', $this->codeArray[$position+1]) )){
+                                    $this->setErrors('La linea numero ' . $position+1 . ', esta mal comentada => '
+                . $this->codeArray[$position+1]);
+                                }
+                            }
+				
+			}
+		
         }
+       
         private function checkBlankLine(){
 
         }
@@ -119,6 +136,16 @@
         public function getErrors()
         {
             return $this->errors;
+        }
+        
+        public function setTags($tags){
+        
+         //  $this->tags[] = $tags;
+        $this->tags[] = 'title';
+        }
+        
+        public function getTags(){
+        	return $this->tags;
         }
 
         public function setFlag($flag)
