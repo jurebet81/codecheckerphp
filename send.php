@@ -15,12 +15,20 @@ include 'CommentCheckClass.php';
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
     }
-    
-    $codec = new CommentCheck($code);
-    $codec->verify();
 
-    if(sizeof($codec->getErrors())>0){
-            print_r($codec->getErrors());
-    }else {
-        echo "The file is correctly commented";
+	if (empty ($_POST['checks'])) {			
+		echo("debe seleccionar al menos un parametro");
+				
+	}else{
+	$vectorparams =$_POST['checks'];
+	$codec = new CommentCheck($code,$vectorparams);
+	$codec->verify();
+	
+		if(sizeof($codec->getErrors())>0){
+				print_r($codec->getErrors());
+		}else {
+			echo "The file is correctly commented";
     }
+		
+}
+	
