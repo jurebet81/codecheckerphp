@@ -1,6 +1,6 @@
 <?php
 include 'CommentCheckClass.php';
-/**
+ /**
  * Created by JetBrains PhpStorm.
  * User: User
  * Date: 3/17/13
