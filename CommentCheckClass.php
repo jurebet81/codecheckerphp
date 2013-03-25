@@ -6,6 +6,13 @@
  * Time: 8:40 PM
  *
  */
+        /**
+         * CommentChek
+         *
+         * Review code errors and return a vector with them
+         * 
+         */
+
     Class CommentCheck{
 
         private $codeArray;
@@ -24,6 +31,7 @@
          *
          * @param (string)($code)
          */
+
         public function __construct($code){
             $this->setCodearray($code);
             $this->setNumCodeLines(sizeof( $this->getCodeArray()));
@@ -37,10 +45,11 @@
          * Starts to verify each comment in the code depending on how many classes and methods were found
          *
          */
+
         public function verify(){
             for ( $i = 0; $i < $this->getNumTimes(); $i++){
                 $this->setPosition( $this->positions[$i] - 1);
-                $this->checkBottom();
+                $this->checkBlankLine();
             }
 
         }
@@ -51,6 +60,7 @@
          * Checks the bottom of each comment
          *
          */
+
         private function checkBottom(){
             $this->setFlag(0);
             if ( preg_match('/^([\s]*)(\*)(\/)$/', $this->codeArray[$this->getPosition()])){
@@ -58,7 +68,7 @@
                 $this->checkMiddle();
             }
             else {
-                $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
+                $this->setErrors('Line: ' . $this->getPosition() . ', is not commented properly => '
                 . $this->codeArray[$this->getPosition()]);
             }
         }
@@ -69,6 +79,7 @@
          * Checks the middle of the each comment and its beginning
          *
          */
+
         private function checkMiddle(){
             if (( preg_match('/^([\s]*)(\*)+(.)*/', $this->codeArray[$this->getPosition()]))
                 && ( strpos( $this->codeArray[$this->getPosition()], "*/") === false)){
@@ -81,7 +92,7 @@
             }
             else {
 
-                $this->setErrors('La linea numero ' . $this->getPosition() . ', esta mal comentada => '
+                $this->setErrors('Line: ' . $this->getPosition() . ', is not commented properly => '
                 . $this->codeArray[$this->getPosition()]);
             }
         }
@@ -92,6 +103,7 @@
          * Sets positions into an array where the methods and classes were found
          *
          */
+
         private function setPositions()
         {
             for ( $i = 0; $i < $this->getNumCodeLines(); $i++){
@@ -109,9 +121,25 @@
         private function checkTags(){
 
         }
+
+        /**
+         * checkBlankLine
+         *
+         * Verify each class and funtion in the code has a blank line before 
+         *
+         */
+
         private function checkBlankLine(){
 
+            if ( !empty($this -> codeArray[$this->getPosition()])){
+                $this->setErrors('Line: ' . $this->getPosition() . ', there is not a black line between the comment and the class');
+            }
+            else{ 
+                $this->setPosition( $this->getPosition()-1);
+                $this->checkBottom();
+            }
         }
+
         private function checkAlign(){
 
         }
