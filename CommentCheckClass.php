@@ -48,6 +48,8 @@
 
         public function verify(){
             for ( $i = 0; $i < $this->getNumTimes(); $i++){
+                $this->setPosition( $this->positions[$i]);
+                $this->align();
                 $this->setPosition( $this->positions[$i] - 1);
                 $this->checkBlankLine();
             }
@@ -65,6 +67,7 @@
             $this->setFlag(0);
             if ( preg_match('/^([\s]*)(\*)(\/)$/', $this->codeArray[$this->getPosition()])){
                 $this->setPosition( $this->getPosition() - 1);
+                $this->align();
                 $this->checkMiddle();
             }
             else {
@@ -85,6 +88,7 @@
                 && ( strpos( $this->codeArray[$this->getPosition()], "*/") === false)){
                 $this->setFlag( $this->getFlag() + 1);
                 $this->setPosition( $this->getPosition() - 1);
+                $this->align();
                 $this->checkMiddle();
             }
             else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
@@ -116,7 +120,6 @@
         }
 
         private function checkTop(){
-
         }
         private function checkTags(){
 
@@ -136,8 +139,34 @@
             }
             else{ 
                 $this->setPosition( $this->getPosition()-1);
+                $this->align();
                 $this->checkBottom();
             }
+        }
+    
+        /**
+         * align
+         *
+         * Calculate spaces and tabs at the beginning of each class,funtion or comment line 
+         *
+         */
+
+        private function align(){
+            $this->setLineArray (  $this->codeArray[$this->getPosition()]);
+            $this->setNumCharactersLine (sizeof( $this->getLineArray()));
+            for ($i = 0; $i < $this->getNumCharactersLine(); $i++) {
+                $this->setAscii ( ord($this->lineArray[$i]));
+              if ($this->getAscii() == 32){
+                    $this->setCountSpaces ($this ->getCountSpaces()+ 1);
+                }elseif($this->getAscii() == 9){
+                    $this->setCountSpaces ($this ->getCountSpaces()+ 4);
+                    }else{
+                         $i=$this->getNumCharactersLine();
+                    }   
+                $this->setAscii (0);
+            }
+            $this->setAlignArray ( $this->getCountSpaces());
+            $this->setCountSpaces (0);
         }
 
         private function checkAlign(){
@@ -217,6 +246,55 @@
         {
             return $this->numTimes;
         }
+        
+        public function setLineArray($lineArray)
+        {
+            $this->lineArray = str_split($lineArray);
+        }
 
+        public function getLineArray()
+        {
+            return $this->lineArray;
+        }
+
+        public function setAlignArray($alignArray)
+        {
+            $this->alignArray[] = $alignArray;
+        }
+
+        public function getAlignArray()
+        {
+            return $this->alignArray;
+        }
+
+		public function setNumCharactersLine($numCharactersLine)
+        {
+            $this->numCharactersLine= $numCharactersLine;
+        }
+
+        public function getNumCharactersLine()
+        {
+            return $this->numCharactersLine;
+        }
+
+        public function setAscii($ascii)
+        {
+            $this->ascii = $ascii;
+        }
+
+        public function getAscii()
+        {
+            return $this->ascii;
+        }
+        
+        public function setCountSpaces($countSpaces)
+        {
+            $this->countSpaces = $countSpaces;
+        }
+
+        public function getCountSpaces()
+        {
+            return $this->countSpaces;
+        }
     }
 ?>
