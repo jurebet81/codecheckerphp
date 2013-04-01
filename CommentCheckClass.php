@@ -50,6 +50,7 @@
             for ( $i = 0; $i < $this->getNumTimes(); $i++){
                 $this->setPosition( $this->positions[$i]);
                 $this->align();
+                $this->setLastLine(false);
                 $this->setPosition( $this->positions[$i] - 1);
                 $this->checkBlankLine();
             }
@@ -92,6 +93,8 @@
                 $this->checkMiddle();
             }
             else if( preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)){
+                $this->setLastLine(true);
+                $this->align();
                 $this->checkTop();
             }
             else {
@@ -135,7 +138,7 @@
         private function checkBlankLine(){
 
             if ( !empty($this -> codeArray[$this->getPosition()])){
-                $this->setErrors('Line: ' . $this->getPosition() . ', there is not a black line between the comment and the class');
+                $this->setErrors('Line: ' . ($this->getPosition()+1). ', there is not a black line between the comment and the class');
             }
             else{ 
                 $this->setPosition( $this->getPosition()-1);
@@ -167,11 +170,32 @@
             }
             $this->setAlignArray ( $this->getCountSpaces());
             $this->setCountSpaces (0);
+            $this->checkAlign();
         }
+        
+        /**
+         * checkAlign
+         *
+         * Compare spaces of the class or funtion with each line of the comment
+         * The beginning of the comment must be the same position as the class or funtion
+         *
+         */
 
         private function checkAlign(){
-
+            //echo $lastLine;
+            $i=sizeof($this -> getAlignArray());
+            if ( $i == 1){
+                $this->setAligner ($this->alignArray[$i-1] + 1);
+                echo $this->getAligner();
+            }elseif($this->alignArray[$i-1] != $this->getAligner()){
+                if (!(($this->getLastLine() == true) &&  ( ($this->alignArray[$i-1]+1) == $this->getAligner() ))){
+                    $this->setErrors('Line: ' . ($this->getPosition()+1). ', is not aligned with the class');
+                }
+                
+            }
         }
+            
+ 
         private function checkProportion(){
 
         }
@@ -285,7 +309,7 @@
         public function getAscii()
         {
             return $this->ascii;
-        }
+        }   
         
         public function setCountSpaces($countSpaces)
         {
@@ -295,6 +319,25 @@
         public function getCountSpaces()
         {
             return $this->countSpaces;
+        }
+        
+        public function setAligner($aligner)
+        {
+            $this->aligner = $aligner;
+        }
+
+        public function getAligner()
+        {
+            return $this->aligner;
+        }
+        public function setLastLine($lastLine)
+        {
+            $this->lastLine = $lastLine;
+        }
+
+        public function getLastLine()
+        {
+            return $this->lastLine;
         }
     }
 ?>
