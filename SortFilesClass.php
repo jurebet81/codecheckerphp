@@ -5,7 +5,7 @@
  * User: User
  * Date: 3/18/13
  * Time: 8:27 PM
- * To change this template use File | Settings | File Templates.
+ *
 */
 class SortFiles
 {
@@ -19,6 +19,13 @@ class SortFiles
     private $totArguments;
     private $filesAux;
 
+    /**
+     * Constructor
+     *
+     * Gets the arguments that were passed through the command prompt putting them into an array
+     *
+     * @param string $args
+     */
     public function __construct($args){
         $this->setArguments($args);
         $this->setDirPath("");
@@ -28,13 +35,18 @@ class SortFiles
         $this->setTotArguments(sizeof($args));
     }
 
+    /**
+     * startSorting
+     *
+     * Depending on the first argument passed, these method calls the method which will sort the php files
+     *
+     */
+
     public function startSorting(){
         if ( $this->getTotArguments() > 2){
             if ( $this->arguments[1] == "f"){
                 $this->orderByFiles( $this->getArguments());
-                echo "files";
             } else if ($this->arguments[1] == "d") {
-                echo "directory";
                 $this->orderByDirectory( $this->getArguments());
             }else {
                 $this->setMessages("Parametro no valido");
@@ -44,10 +56,28 @@ class SortFiles
         }
     }
 
+    /**
+     * loadAllFiles
+     *
+     * Puts the files of a specific directory into a file array.
+     *
+     * @param string $directory
+     *
+     */
+
     private function loadAllFiles($directory){
         $this->setFileArray( scandir($directory));
         $this->setTotFiles( sizeof( $this->getFileArray()) - 2);
     }
+
+    /**
+     * loadPhpFiles
+     *
+     * Catches the php files and puts them into a new array that is called filephparray
+     *
+     * @param $files
+     */
+
 
     private function loadPhpFiles($files){
         for ( $i = 0; $i < $this->getTotFiles(); $i++){
