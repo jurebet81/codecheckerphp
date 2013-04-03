@@ -95,6 +95,7 @@ Class CommentCheck {
         } else if (preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
             $this->setLastLine(true);
             $this->align();
+            unset($this->alignArray); 
             $this->checkTags();
 
         } else {
@@ -183,8 +184,8 @@ Class CommentCheck {
     private function checkBlankLine() {
 
         if ( !empty($this -> codeArray[$this->getPosition()])){
-                $i=$this->getPosition()+1;
-                $this->setErrors('Line: ' . $i . ', there is not a black line between the comment and the class');
+                $x=$this->getPosition()+1;
+                $this->setErrors('Line: ' . $x . ', there is not a black line between the comment and the class');
         }
         else{ 
                 $this->setPosition( $this->getPosition()-1);
@@ -201,14 +202,14 @@ Class CommentCheck {
     private function align() {
         $this->setLineArray($this->codeArray[$this->getPosition()]);
         $this->setNumCharactersLine(sizeof($this->getLineArray()));
-        for ($i = 0; $i < $this->getNumCharactersLine(); $i++) {
-            $this->setAscii(ord($this->lineArray[$i]));
+        for ($x = 0; $x < $this->getNumCharactersLine(); $x++) {
+            $this->setAscii(ord($this->lineArray[$x]));
             if ($this->getAscii() == 32) {
                 $this->setCountSpaces($this->getCountSpaces() + 1);
             } elseif ($this->getAscii() == 9) {
                 $this->setCountSpaces($this->getCountSpaces() + 4);
             } else {
-                $i = $this->getNumCharactersLine();
+                $x = $this->getNumCharactersLine();
             }
             $this->setAscii(0);
         }
@@ -226,12 +227,12 @@ Class CommentCheck {
      */
     private function checkAlign() {
         //echo $lastLine;
-        $i = 0;
-        $i = sizeof($this->getAlignArray());
-        if ($i == 1) {
-            $this->setAligner($this->alignArray[$i - 1] + 1);
-        } elseif ($this->alignArray[$i - 1] != $this->getAligner()) {
-            if (!(($this->getLastLine() == true) && (($this->alignArray[$i - 1] + 1) == $this->getAligner() ))) {
+        $x = 0;
+        $x = sizeof($this->getAlignArray());
+        if ($x == 1) {
+            $this->setAligner($this->alignArray[$x - 1] + 1);
+        } elseif ($this->alignArray[$x - 1] != $this->getAligner()) {
+            if (!(($this->getLastLine() == true) && (($this->alignArray[$x - 1] + 1) == $this->getAligner() ))) {
                 $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not aligned with the class');
             }
         }
