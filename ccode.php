@@ -28,9 +28,9 @@ include 'SortFilesClass.php';
             }
         }
     }else{
-        $messages = sizeof($sortFiles->getMessages());
+        $messages = $sortFiles->getMessages();
         for ($i=0; $i < $totMessages;$i++){
-            echo "\n  ". $i . " - " . $messages[$i];
+            echo "\n Error: " . $messages[$i];
         }
         //echo print_r( $sortFiles->getMessages());
     }
