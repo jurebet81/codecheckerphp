@@ -23,7 +23,7 @@ include 'CommentCheckClass.php';
 	$vectorparams =$_POST['checks'];
 	$codec = new CommentCheck($code,$vectorparams);
 	$codec->verify();
-	
+		
 		if(sizeof($codec->getErrors())>0){
 				print_r($codec->getErrors());
 		}else {
