@@ -32,6 +32,15 @@ include 'SortFilesClass.php';
         for ($i=0; $i < $totMessages;$i++){
             echo "\n Error: " . $messages[$i];
         }
-        //echo print_r( $sortFiles->getMessages());
+        $help = "ccode.php \n
+            Sintax: php path/ccode.php [a | r | t | p] [f | d] PathOfDirectoryOrFile.php \n\n
+            a:  check autor tag \n
+            r:  check return tag \n
+            t:  check title tag \n
+            p:  check param tag \n \n
+            f:  check specific files \n
+            d:  check by a specific directory \n\n
+            Example: php C:\\wamp\\www\\ccode.php art f codetobechecked.php";
+        echo $help;
     }
 
