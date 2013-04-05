@@ -50,32 +50,40 @@ Class CommentCheck {
      */
     public function verify() {
         for ($i = 0; $i < $this->getNumTimes(); $i++) {
-            $this->setPosition($this->positions[$i]);
-            $this->align();
-            $this->setLastLine(false);
-            $this->setPosition($this->positions[$i] - 1);
-            $this->checkBlankLine();
+            $this->setPosition(($this->positions[$i]) - 1);
+            //   $this->align();
+            // $this->setLastLine(false);
+            $this->setBottom(($this->getPosition()));
+//            echo '<br><br>'.$this->getPosition(). '<br><br>';
+//             echo '<br><br>'. $this->codeArray[$this->getBottom()]. '<br><br>';
+            $this->checkBottom();
+            //         echo '<p> position array:  '. $this->codeArray[$this->getPosition()]. '</p>';
+            //     $this->checkBlankLine();
+            //echo 'hola1';
         }
     }
 
     /**
-     * checkBottom
+      checkBottom
      *
      * Checks the bottom of each comment
      *
      */
     private function checkBottom() {
         $this->setFlag(0);
-        if (preg_match('/^([\s]*)(\*)(\/)$/', $this->codeArray[$this->getPosition()])) {
-            $this->align();
-            $this->setPosition($this->getPosition() - 1);
-            $this->setBottom(($this->getPosition()) + 1);
-            
-            $this->checkMiddle();
+        // echo '<p>'.$this->codeArray[($this->getPosition())].'</p>';
+        if (preg_match('/^([\s]*)(\*)(\/)([\s]*)$/', $this->codeArray[($this->getPosition())])) {
+            //     $this->align();
+            // $this->setBottom(($this->getPosition()) + 1);
+            //  echo 'hola';
+            //echo '<br><br>'.$this->getBottom(). '<br><br>';
+            // echo 'holaaaa';
         } else {
-            $this->setErrors('Line: ' . $this->getPosition() . ', is not commented properly => '
+            $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
                     . $this->codeArray[$this->getPosition()]);
         }
+        $this->setPosition($this->getPosition() - 1);
+        $this->checkMiddle();
     }
 
     /**
@@ -88,29 +96,42 @@ Class CommentCheck {
         if (( preg_match('/^([\s]*)(\*)+(.)*/', $this->codeArray[$this->getPosition()]))
                 && ( strpos($this->codeArray[$this->getPosition()], "*/") === false)) {
             $this->setFlag($this->getFlag() + 1);
-            $this->align();
             $this->setPosition($this->getPosition() - 1);
-            
             $this->checkMiddle();
-        } else if (preg_match('/^([\s]*)\/([\*]{2})$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
-            $this->setLastLine(true);
-            $this->align();
-            unset($this->alignArray); 
-            $this->checkTags();
-
+        } else if (preg_match('/^([\s]*)\/(\*)+$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
+            // } else if (preg_match('/^([\s]*)\/([\*]{2})([\s]*)$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
+            //       $this->setLastLine(true);
+            //        $this->align();
+            // unset($this->alignArray); 
+            //   echo 'hola';
+            $this->checkTop();
         } else {
 
-            $this->setErrors('Line: ' . $this->getPosition() . ', is not commented properly => '
+            $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
                     . $this->codeArray[$this->getPosition()]);
+            $this->setPosition($this->getPosition() - 1);
+            $this->checkMiddle();
         }
     }
 
-    /**
+    private function checkTop() {
+        if (!(preg_match('/^([\s]*)\/([\*]{2})([\s]*)$/', $this->codeArray[$this->getPosition()]))) {
+            $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
+                    . $this->codeArray[$this->getPosition()]);
+        }
+        //       $this->setLastLine(true);
+        //        $this->align();
+        // unset($this->alignArray); 
+        $this->checkTags();
+    }
+
+    /*
      * setPositions
      *
      * Sets positions into an array where the methods and classes were found
      *
      */
+
     private function setPositions() {
         for ($i = 0; $i < $this->getNumCodeLines(); $i++) {
             if (strpos($this->codeArray[$i], 'Class') !== false || strpos($this->codeArray[$i], 'public') !== false
@@ -121,7 +142,13 @@ Class CommentCheck {
         }
     }
 
+    /**
+     * Title: checkTags
+     * Method that checks that the tags the user whats to check are correctly
+     * commented on the comment.
+     */
     private function checkTags() {
+
         $contAuthor = 0;
         $contReturn = 0;
         $contParam = 0;
@@ -133,16 +160,23 @@ Class CommentCheck {
         for ($j = 0; $j < $length; $j++) {
 
             if ($tagArray[$j] == 'title') {
-
+                /*
+                 * checks that the first line after /** of all comments are the title
+                 *
+                 */
                 if (!(preg_match('/^([\s]*)(\*)[\s]((title)|(Title))(:)?.+/', $this->codeArray[$position + 1]) )) {
                     $this->setErrors('Line number ' . ($this->getPosition() + 2) . ', is wrong  => '
-                            . $this->codeArray[$position + 1] . ' The comments does not have title tag');
+                            . $this->codeArray[$position + 1] . ' The comment does not have title tag');
                 }
             }
 
             if ($tagArray[$j] == 'author') {
+                // echo '<p>Position: '.($this->getPosition()+1).'</p>';
+                //  echo '<p>Bottom: '.($this->getBottom()+1).'</p>';
+                //  echo '<p> array: '.$this->codeArray[($this->bottom) ].'</p>';
+
                 for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
-                    if ((preg_match('/^([\s]*)(\*)[\s]((author)|(Author)|(@author))(:)?.+/', $this->codeArray[$m]))) {
+                    if ((preg_match('/([\s]*)[\s]((author)|(Author)|(@author))(:)?.+/', $this->codeArray[$m + 1]))) {
                         $contAuthor = 1;
                     }
                 }
@@ -153,7 +187,7 @@ Class CommentCheck {
             if (!(preg_match('/^([\s]*)(Class).+/', $this->codeArray[($this->bottom) + 1]))) {
                 if ($tagArray[$j] == 'return') {
                     for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
-                        if ((preg_match('/^([\s]*)(\*)[\s]((return)|(Return)|(@return))(:)?.+/', $this->codeArray[$m]))) {
+                        if ((preg_match('/([\s]*)[\s]((return)|(Return)|(@return))(:)?.+/', $this->codeArray[$m]))) {
                             $contReturn = 1;
                         }
                     }
@@ -163,7 +197,7 @@ Class CommentCheck {
                 }
                 if ($tagArray[$j] == 'param') {
                     for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
-                        if ((preg_match('/^([\s]*)(\*)[\s]((param)|(Param)|(@param))(:)?.+/', $this->codeArray[$m]))) {
+                        if ((preg_match('/([\s]*)[\s]((param)|(Param)|(@param))(:)?.+/', $this->codeArray[$m]))) {
                             $contParam = 1;
                         }
                     }
@@ -182,14 +216,15 @@ Class CommentCheck {
      *
      */
     private function checkBlankLine() {
-
-        if ( !empty($this -> codeArray[$this->getPosition()])){
-                $x=$this->getPosition()+1;
-                $this->setErrors('Line: ' . $x . ', there is not a black line between the comment and the class');
-        }
-        else{ 
-                $this->setPosition( $this->getPosition()-1);
-                $this->checkBottom();
+        //echo '<p>position checkline'. $this->getPosition(). '</p>';
+        echo '<p>position checkline array' . $this->codeArray[$this->getPosition()] . '</p>';
+        if (!(preg_match('/[\s]*(\n|\r\n)/', $this->codeArray[$this->getPosition()]))) {
+            $x = $this->getPosition() + 1;
+            $this->setErrors('Line: ' . $x . ', there is not a black line between the comment and the class');
+            //   $this->checkBottom();
+        } else {
+            $this->setPosition($this->getPosition() - 1);
+            $this->checkBottom();
         }
     }
 
