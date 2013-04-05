@@ -149,16 +149,12 @@ class SortFiles
         for ( $i=0;$i<$sizeArg;$i++){
             if( $tags[$i]=="a"){
                 $this->setTags("author");
-                echo "author";
             }else if( $tags[$i]=="r"){
                 $this->setTags("return");
-                echo "return";
             }else if( $tags[$i]=="t"){
                 $this->setTags("title");
-                echo "title";
             }else if( $tags[$i]=="p"){
                 $this->setTags("param");
-                echo "param";
             }else{
                 $this->setMessages("Tags parameters are not valid");
                 $i = $sizeArg;
