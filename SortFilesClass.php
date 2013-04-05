@@ -14,10 +14,10 @@ class SortFiles
     private $dirPath;
     private $totPhpFiles;
     public  $filePhpArray;
+    private $tags;
     private $messages;
     private $arguments;
     private $totArguments;
-    private $filesAux;
 
     /**
      * Constructor
@@ -26,6 +26,7 @@ class SortFiles
      *
      * @param string $args
      */
+
     public function __construct($args){
         $this->setArguments($args);
         $this->setDirPath("");
@@ -43,16 +44,17 @@ class SortFiles
      */
 
     public function startSorting(){
-        if ( $this->getTotArguments() > 2){
-            if ( $this->arguments[1] == "f"){
+        if ( $this->getTotArguments() > 3){
+            $this->sortTags($this->arguments[1]);
+            if ( $this->arguments[2] == "f"){
                 $this->orderByFiles( $this->getArguments());
-            } else if ($this->arguments[1] == "d") {
+            } else if ( $this->arguments[2] == "d") {
                 $this->orderByDirectory( $this->getArguments());
             }else {
-                $this->setMessages("Parametro no valido");
+                $this->setMessages("Parameters are not valid");
             }
         }else{
-            $this->setMessages("No hay suficientes argumentos para el chequeo");
+            $this->setMessages("There are not enough arguments");
         }
     }
 
@@ -67,7 +69,7 @@ class SortFiles
 
     private function loadAllFiles($directory){
         $this->setFileArray( scandir($directory));
-        $this->setTotFiles( sizeof( $this->getFileArray()) - 2);
+        $this->setTotFiles( sizeof( $this->getFileArray()));
     }
 
     /**
@@ -78,7 +80,6 @@ class SortFiles
      * @param $files
      */
 
-
     private function loadPhpFiles($files){
         for ( $i = 0; $i < $this->getTotFiles(); $i++){
             if ( preg_match('/^(.)+\.(php)$/', $files[$i])){
@@ -88,32 +89,80 @@ class SortFiles
         $this->setTotPhpFiles( sizeof( $this->getFilePhpArray()));
     }
 
+    /**
+     * orderByDirectory
+     *
+     * verifies if the directory passed exists
+     *
+     * @param string $directory
+     */
+
     private function orderByDirectory($directory){
-        if ( is_dir( $directory[2])){
-            $this->setDirPath( $directory[2] . "/");
+        if ( is_dir( $directory[3])){
+            $this->setDirPath( $directory[3] . "/");
             $this->loadAllFiles( $this->getDirPath());
             $this->loadPhpFiles( $this->getFileArray());
         }else{
-            $this->setMessages( $directory[2] . " No es un directorio") ;
+            $this->setMessages( $directory[3] . " is not a directory") ;
         }
     }
 
+    /**
+     * orderByFiles
+     *
+     * verifies if the files passed exist
+     *
+     * @param $files
+     *
+     */
+
     private function orderByFiles($files){
         $this->setDirPath("");
-        for ( $i = 2; $i < $this->getTotArguments(); $i++){
-            echo $files[$i];
+        $filesAux = "";
+        for ( $i = 3; $i < $this->getTotArguments(); $i++){
             if ( is_file( $files[$i])) {
-                $this->setFilesAux( $files[$i]);
+                $filesAux[] = $files[$i];
             }else{
-                $this->setMessages( $files[$i] . " No es un archivo");
+                $this->setMessages( $files[$i] . " is not a file");
             }
         }
-        if ( sizeof( $this->getFilesAux()) > 0){
-            $this->setTotFiles( sizeof( $this->getFilesAux()));
-            $this->setFileArray( $this->getFilesAux());
-            $this->loadPhpFiles( $this->getFilesAux());
+        if ( sizeof( $filesAux) > 0){
+            $this->setTotFiles( sizeof( $filesAux));
+            $this->setFileArray( $filesAux);
+            $this->loadPhpFiles( $filesAux);
         }else{
-            $this->setMessages("Hubo un error obteniendo los archivos a analizar");
+            $this->setMessages("There was an error getting the files");
+        }
+    }
+
+    /**
+     * sortTags
+     *
+     * puts the total of the tags chosen into an array
+     *
+     * @param $tags
+     *
+     */
+
+    private function sortTags($tags){
+        $sizeArg = strlen($tags);
+        for ( $i=0;$i<$sizeArg;$i++){
+            if( $tags[$i]=="a"){
+                $this->setTags("author");
+                echo "author";
+            }else if( $tags[$i]=="r"){
+                $this->setTags("return");
+                echo "return";
+            }else if( $tags[$i]=="t"){
+                $this->setTags("title");
+                echo "title";
+            }else if( $tags[$i]=="p"){
+                $this->setTags("param");
+                echo "param";
+            }else{
+                $this->setMessages("Tags parameters are not valid");
+                $i = $sizeArg;
+            }
         }
     }
 
@@ -196,13 +245,14 @@ class SortFiles
     {
         return $this->filePhpArray;
     }
-    public function setFilesAux($filesAux)
+
+    public function setTags($tags)
     {
-        $this->filesAux[] = $filesAux;
+        $this->tags[] = $tags;
     }
 
-    public function getFilesAux()
+    public function getTags()
     {
-        return $this->filesAux;
+        return $this->tags;
     }
 }
