@@ -49,13 +49,13 @@ include 'CommentCheckClass.php';
 		}else {
 			echo "The file is correctly commented";
 		}
-		echo "1.  The title tag if is being checked must be the first tag of the comment;
+		echo "<p>1.  The title tag if is being checked must be the first tag of the comment;</p>
 
-			2.  The correct structure of the comment is;
-				/**
-				 *
-				 *
-				 */";
+			2.  The correct structure of the comment is;<br>
+				/** <br>
+				 *<br>
+				 *<br>
+				 */<br>";
 
 				
 

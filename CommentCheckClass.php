@@ -53,8 +53,12 @@ Class CommentCheck {
             $this->setPosition(($this->positions[$i]));
            // $this->align();
             //$this->setLastLine(false);
-            $this->setBottom(($this->getPosition()));
+           
+           
+            
 			$this->setPosition(($this->positions[$i]) - 1);
+				 $this->setBottom(($this->getPosition())+1);
+		
             $this->checkBottom();
 //                $this->checkBlankLine();
         }
@@ -180,7 +184,7 @@ Class CommentCheck {
                     $this->setErrors('The comment does not have author tag.  Comment => ' . $this->codeArray[($this->bottom)]);
                 }
             }
-            if (!(preg_match('/^([\s]*)(Class).+/', $this->codeArray[($this->bottom) + 1]))) {
+            if (!(preg_match('/^([\s]*)(Class).+/', $this->codeArray[($this->bottom)]))) {
                 if ($tagArray[$j] == 'return') {
                     for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
                         if ((preg_match('/([\s]*)[\s]((return)|(Return)|(@return))(:)?.+/', $this->codeArray[$m]))) {
