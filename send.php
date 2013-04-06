@@ -1,5 +1,12 @@
+<html>
+<head>
+<link rel="stylesheet" href="diseno.css" type="text/css" />
+</head>
+</body>			
 <?php
 include 'CommentCheckClass.php';
+
+
  /**
  * Created by JetBrains PhpStorm.
  * User: User
@@ -17,18 +24,44 @@ include 'CommentCheckClass.php';
     }
 
 	if (empty ($_POST['checks'])) {			
-		echo("debe seleccionar al menos un parametro");
+		echo("You must select at least one parameter");
 				
 	}else{
 	$vectorparams =$_POST['checks'];
 	$codec = new CommentCheck($code,$vectorparams);
 	$codec->verify();
 		
+			
+		echo '<textarea class="codearea">';
+				foreach($codec->getCodeArray() as $codeArray){
+					echo $codeArray ."\n" ;
+				}
+		echo "</textarea>";
+		
 		if(sizeof($codec->getErrors())>0){
-				print_r($codec->getErrors());
+				echo "<ul>";
+				foreach($codec->getErrors() as $errorArray){
+					echo "<li>";
+					echo $errorArray ;
+					echo "</li>";
+				}
+				echo "</ul>";
 		}else {
 			echo "The file is correctly commented";
-    }
+		}
+		echo "1.  The title tag if is being checked must be the first tag of the comment;
+
+			2.  The correct structure of the comment is;
+				/**;
+				 *;
+				 *;
+				 */";
+
+				
+
+
 		
 }
-	
+?>
+</body>
+</html>	

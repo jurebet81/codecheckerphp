@@ -75,9 +75,9 @@ body {
 	text-align: center; 
 	margin-top: 300px;
 	}
-.estilotextarea {
-	background-color: transparent;
-	width:400px;
-	height:100px;
-	border: 2px 
+.codearea {
+	width:900px;
+	height:250px;
+	border: 2px solid #cccccc;; 
+	
 	}
