@@ -41,9 +41,7 @@ include 'CommentCheckClass.php';
 		if(sizeof($codec->getErrors())>0){
 				echo "<ul>";
 				foreach($codec->getErrors() as $errorArray){
-					echo "<li>";
-					echo $errorArray ;
-					echo "</li>";
+					echo "<li>" . $errorArray . "</li>";
 				}
 				echo "</ul>";
 		}else {
