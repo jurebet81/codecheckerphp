@@ -52,9 +52,9 @@ include 'CommentCheckClass.php';
 		echo "1.  The title tag if is being checked must be the first tag of the comment;
 
 			2.  The correct structure of the comment is;
-				/**;
-				 *;
-				 *;
+				/**
+				 *
+				 *
 				 */";
 
 				
