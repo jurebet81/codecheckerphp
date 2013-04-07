@@ -12,7 +12,7 @@
  * CommentCheck
  *
  * Review code errors and return a vector with them
- * 
+ *
  */
 Class CommentCheck {
 
@@ -31,14 +31,14 @@ Class CommentCheck {
     private $numCharactersLine;
     private $ascii;
 
-    /**
-     * constructor
-     *
-     * Gets the code as a string and calls the method to put it into an array
-     * Calls the method to find how many classes and methods there are in the php file
+   /**
+    * constructor
+    * @author Julian
+    * Gets the code as a string and calls the method to put it into an array
+    * Calls the method to find how many classes and methods there are in the php file
     *
-     * @param (string)($code)
-     */
+    * @param (string)($code)
+    */
     public function __construct($code, $tags) {
         $this->setCodearray($code);
         $this->setNumCodeLines(sizeof($this->getCodeArray()));
@@ -48,34 +48,47 @@ Class CommentCheck {
     }
 
     /**
-     * Verify
-     *
-     * Starts to verify each comment in the code depending on how many classes and methods were found
-     *
-     */
+    * Verify
+    *
+    * Starts to verify each comment in the code depending on how many classes and methods were found
+    *
+    */
     public function verify() {
         for ($i = 0; $i < $this->getNumTimes(); $i++) {
-            $this->setSpaces(0);
             $this->setPosition(($this->positions[$i]));
             $this->setSpaces($this->codeArray[$this->positions[$i]]);
-			$this->setPosition(($this->positions[$i]) - 1);
+            $this->setPosition(($this->positions[$i]) - 1);
 		    $this->setBottom(($this->getPosition())+1);
-            $this->checkBottom();
+            $this->hasComment();
         }
     }
 
-/**
+    /*
+     * hasComment
+     *
+     * Checks if each method or class has its own comment
+     *
+     */
+
     private function hasComment(){
         $n = $this->getPosition();
-        if ($n < 2){
-            $this->setErrors('The Class: ' . $this->codeArray[$this->getPosition()+1] . ', does not have its comment');
-        }else {
-            for ($i=$n;$i>1;$i--){
-                if ($this->codeArray[$i] ){
-
+        if ($n > 2){
+            $method = $this->codeArray[$n+1];
+            for ($i=$n;$i>1;$i--) {
+                if (!empty($this->codeArray[$i])){
+                    if ( !preg_match('/^([\s]+)$/', $this->codeArray[$i])){
+                        if ( preg_match('/(\s}|[}])+/', $this->codeArray[$i]) ){
+                            $this->setErrors('The method: ' . $method . ', does not have its comment');
+                            $i = 1;
+                        }else{
+                            $i = 1;
+                                $this->checkBottom();
+                        }
+                    }
                 }
             }
-
+        }else{
+            $this->setErrors('The Class does not have its comment');
         }
     }
 
@@ -85,33 +98,22 @@ Class CommentCheck {
      * Checks the bottom of each comment
      *
      */
-
     private function checkBottom() {
         $this->setFlag(0);
-        if ($this->getPosition() > 2){
             while ((empty($this->codeArray[($this->getPosition())])) ||
-            (preg_match('/^([\s]+)$/', $this->codeArray[($this->getPosition())])) ){
-            $this->setPosition($this->getPosition() - 1);
-            $this->setErrors('Line: ' . ($this->getPosition() + 2 )  . ', can not be empty');
+                    (preg_match('/^([\s]+)$/', $this->codeArray[($this->getPosition())])) ){
+                $this->setPosition($this->getPosition() - 1);
+                $this->setErrors('Line: ' . ($this->getPosition() + 2 )  . ', can not be empty');
             }
-
-            if ( preg_match('/(\s}|[}])+/', $this->codeArray[($this->getPosition())])==false ){
-                if ( preg_match('/^([\s]*)(\*)(\/)([\s]*)$/', $this->codeArray[($this->getPosition())])) {
-                    $this->checkAlign($this->codeArray[($this->getPosition())], $this->getSpaces());
-                    $this->setPosition($this->getPosition() - 1);
-                    $this->checkMiddle();
-                } else {
-                    $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
-                            . $this->codeArray[$this->getPosition()]);
-                    $this->setPosition($this->getPosition() - 1);
-                    //$this->checkMiddle();
-                }
-            }else{
-                $this->setErrors('The method: ' . $this->codeArray[$this->getPosition()+2] . ', does not have its comment');
+            if ( preg_match('/^([\s]*)(\*)(\/)([\s]*)$/', $this->codeArray[($this->getPosition())])) {
+                $this->checkAlign($this->codeArray[($this->getPosition())], $this->getSpaces());
+                $this->setPosition($this->getPosition() - 1);
+                $this->checkMiddle();
+            }else {
+                $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
+                   . $this->codeArray[$this->getPosition()]);
+                $this->setPosition($this->getPosition() - 1);
             }
-        }else{
-            $this->setErrors('The Class: ' . $this->codeArray[$this->getPosition()+1] . ', does not have its comment');
-        }
     }
 
     /**
@@ -162,10 +164,10 @@ Class CommentCheck {
      *
      */
     private function setPositions() {
+        $regexp = '/(([Pp]ublic(\s)+|[Ff]unction(\s)+|[Pp]rivate(\s)+|[Ss]tatic(\s)+)+(\s)*[a-z_]+[a-zA-Z0-9_]*(\((.)*\))';
+        $regexp = $regexp . '|([Cc]lass)(\s)+[a-zA-Z0-9_]+)/';
         for ($i = 0; $i < $this->getNumCodeLines(); $i++) {
-            if (strpos($this->codeArray[$i], 'Class') !== false || strpos($this->codeArray[$i], 'public') !== false
-                    || strpos($this->codeArray[$i], 'function') !== false || strpos($this->codeArray[$i], 'static') !== false
-                    || strpos($this->codeArray[$i], 'private') !== false) {
+            if (preg_match($regexp, $this->codeArray[$i]) ){
                 $this->positions[] = $i;
             }
         }
@@ -240,9 +242,11 @@ Class CommentCheck {
      */
     private function checkBlankLine() {
         if ($this->getPosition()>1){
-            $x = $this->getPosition() + 1;
-            if (!empty($this->codeArray[$this->getPosition()])) {
-                $this->setErrors('Line: ' . $x . ', there is not a black line above the comment');
+            $x = $this->getPosition();
+            if ((!empty($this->codeArray[$x])) && ( !preg_match('/^([\s]+)$/', $this->codeArray[$x]))) {
+                $this->setErrors('There should be a blank line above the line number ' . ($x + 2));
+            }else{
+
             }
         }
     }
@@ -254,8 +258,8 @@ Class CommentCheck {
     /**
      * checkAlign
      *
-     * Compare spaces of the class or function with each line of the comment
-     * The beginning of the comment must be the same position as the class or funtion
+     * Compare spaces of the clas or function with each line of the comment
+     * The beginning of the comment must be the same position as the class or function
      *
     */
     private function checkAlign($codeLine,$spaces) {
@@ -276,7 +280,6 @@ Class CommentCheck {
         if ($spacesComment <> $spaces){
             $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not aligned with the class');
         }
-
     }
 
     public function setPosition($position) {
@@ -386,8 +389,8 @@ Class CommentCheck {
      *
      *
      */
-    public function setSpaces($codeLine)
-    {
+    public function setSpaces($codeLine){
+        $this->spaces = 0;
         $this->setLineArray($codeLine);
         $this->setNumCharactersLine(sizeof($this->getLineArray()));
         for ($x = 0; $x < $this->getNumCharactersLine(); $x++) {
@@ -407,8 +410,6 @@ Class CommentCheck {
     {
         return $this->spaces;
     }
-
-
 }
 
 ?>
