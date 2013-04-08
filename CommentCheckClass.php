@@ -25,6 +25,7 @@ Class CommentCheck {
     private $position;
     private $tags;
     private $bottom;
+    private $positionProportion;
 
     private $spaces;
     private $lineArray;
@@ -45,6 +46,7 @@ Class CommentCheck {
         $this->setPositions();
         $this->setNumTimes(sizeof($this->getPositions()));
         $this->setTags($tags);
+        $this->setPositionProportion();
     }
 
     /**
@@ -61,6 +63,7 @@ Class CommentCheck {
 		    $this->setBottom(($this->getPosition())+1);
             $this->hasComment();
         }
+        $this->checkProportion(1);
     }
 
     /*
@@ -251,10 +254,61 @@ Class CommentCheck {
         }
     }
 
-    private function checkProportion(){
-
+    public function checkProportion($comments){
+        $r = $this->getPositionProportion();   
+        //echo ''.sizeof($this->getNumCodeLines());
+        for ( $i = 0; $i <= sizeof($this->getPositionProportion()) - 1; $i++){           
+            $counter = 0;
+            if ($i <> sizeof($this->getPositionProportion()) - 1)
+            {
+                for ($j = $r[$i] + 1; $j < $r[$i + 1]; $j++) {
+                    if (substr_count($this->codeArray[$j], "//") > 0 )
+                    {
+                        $counter++;
+                    }
+                }
+                if ($counter < $comments)
+                {
+                    $this->setErrors('Function in the position ' . $r[$i] . ' have a size of ' .( $r[$i + 1] - $r[$i]) .' lines
+                        <br> and a total of ' . $counter . ' comments, which do not match the specified number of comments.');
+                }
+            }else{
+                $k = $this->getCodeArray();
+                for ($j = $r[$i] + 1; $j < sizeof($this->getCodeArray()); $j++) {
+                    if (substr_count($this->codeArray[$j], "//") > 0 )
+                    {
+                        $counter++;
+                    }
+                }
+                if ($counter < $comments)
+                {
+                    $this->setErrors('Function in the position ' . $r[$i] . ' have a size of '
+                    .( sizeof($this->getCodeArray()) - $r[$i]) .' lines
+                    <br> and a total of ' . $counter . ' comments, which do not match the specified number of comments.');
+                }
+                
+               
+                
+            }
+            //echo '<br>Function in the position ' . $r[$i] . ' have a size of ' .( $r[$i + 1] - $r[$i]) .' lines';    
+            //echo '<br> and a total of ' . $counter . ' comments.';
+        }
+        
     }
-
+    
+    public function setPositionProportion(){
+        for ( $i = 0; $i < $this->getNumCodeLines(); $i++){
+            if ( strpos( $this->codeArray[$i], 'public function') == true || strpos( $this->codeArray[$i], 'private function') == true)
+            {
+                $this->positionProportion[] = $i;
+            }
+        }
+    }
+    
+    public function getPositionProportion(){
+    
+        return $this->positionProportion;
+    }
     /**
      * checkAlign
      *

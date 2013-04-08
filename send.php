@@ -30,6 +30,7 @@ include 'CommentCheckClass.php';
 	$vectorparams =$_POST['checks'];
 	$codec = new CommentCheck($code,$vectorparams);
 	$codec->verify();
+        
 		
 			
 		echo '<textarea class="codearea">';
@@ -54,9 +55,8 @@ include 'CommentCheckClass.php';
 				 *<br>
 				 *<br>
 				 */<br>";
-
-				
-
+         
+        
 
 		
 }
