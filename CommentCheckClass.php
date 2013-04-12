@@ -75,23 +75,20 @@ Class CommentCheck {
 
     private function hasComment(){
         $n = $this->getPosition();
-        if ($n > 2){
-            $method = $this->codeArray[$n+1];
-            for ($i=$n;$i>1;$i--) {
-                if (!empty($this->codeArray[$i])){
-                    if ( !preg_match('/^([\s]+)$/', $this->codeArray[$i])){
-                        if ( preg_match('/(\s}|[}])+/', $this->codeArray[$i]) ){
-                            $this->setErrors('The method: ' . $method . ', does not have its comment');
-                            $i = 1;
-                        }else{
-                            $i = 1;
-                                $this->checkBottom();
-                        }
+        $method = $this->codeArray[$n+1];
+        for ($i=$n;$i>-1;$i--) {
+            if (!empty($this->codeArray[$i])){
+                if ( !preg_match('/^([\s]+)$/', $this->codeArray[$i])){
+                    if ( preg_match('/(\s}|[}])+/', $this->codeArray[$i]) ){
+                        $this->setErrors('The method: ' . $method . ', does not have its comment');
+                    }else if ( preg_match('/(\s)*((<\?)|<\?php)(\s)*/', $this->codeArray[$i]) ){
+                        $this->setErrors('The class: ' . $method . ', does not have its comment');
+                    }else{
+                        $this->checkBottom();
                     }
+                    $i = -1;
                 }
             }
-        }else{
-            $this->setErrors('The Class does not have its comment');
         }
     }
 
@@ -133,7 +130,7 @@ Class CommentCheck {
 
             $this->setPosition($this->getPosition() - 1);
             $this->checkMiddle();
-        } else if (preg_match('/^([\s]*)\/(\*)+$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
+        } else if (preg_match('/^([\s]*)\/(.)*$/', $this->codeArray[$this->getPosition()]) && ( $this->getFlag() > 0)) {
             $this->checkTop();
         } else {
             $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
@@ -154,10 +151,12 @@ Class CommentCheck {
             $this->setErrors('Line: ' . ($this->getPosition() + 1) . ', is not commented properly => '
                     . $this->codeArray[$this->getPosition()]);
         }
+
+        $this->checkTags();
         $this->checkAlign($this->codeArray[($this->getPosition())], $this->getSpaces());
         $this->setPosition($this->getPosition() - 1);
         $this->checkBlankLine();
-        $this->checkTags();
+
     }
 
     /*
