@@ -40,13 +40,14 @@ Class CommentCheck {
     *
     * @param (string)($code)
     */
-    public function __construct($code, $tags) {
+    public function __construct($code, $tags, $numbercomments) {
         $this->setCodearray($code);
         $this->setNumCodeLines(sizeof($this->getCodeArray()));
         $this->setPositions();
         $this->setNumTimes(sizeof($this->getPositions()));
         $this->setTags($tags);
         $this->setPositionProportion();
+        $this->setNumberComments($numbercomments);
     }
 
     /**
@@ -63,7 +64,7 @@ Class CommentCheck {
 		    $this->setBottom(($this->getPosition())+1);
             $this->hasComment();
         }
-        $this->checkProportion(1);
+        $this->checkProportion();
     }
 
     /*
@@ -253,7 +254,7 @@ Class CommentCheck {
         }
     }
 
-    public function checkProportion($comments){
+    public function checkProportion(){
         $r = $this->getPositionProportion();   
         //echo ''.sizeof($this->getNumCodeLines());
         for ( $i = 0; $i <= sizeof($this->getPositionProportion()) - 1; $i++){           
@@ -266,7 +267,7 @@ Class CommentCheck {
                         $counter++;
                     }
                 }
-                if ($counter < $comments)
+                if ($counter < $this->getNumberComments())
                 {
                     $this->setErrors('Function in the position ' . $r[$i] . ' have a size of ' .( $r[$i + 1] - $r[$i]) .' lines
                         <br> and a total of ' . $counter . ' comments, which do not match the specified number of comments.');
@@ -279,20 +280,14 @@ Class CommentCheck {
                         $counter++;
                     }
                 }
-                if ($counter < $comments)
+                if ($counter < $this->getNumberComments())
                 {
                     $this->setErrors('Function in the position ' . $r[$i] . ' have a size of '
                     .( sizeof($this->getCodeArray()) - $r[$i]) .' lines
                     <br> and a total of ' . $counter . ' comments, which do not match the specified number of comments.');
-                }
-                
-               
-                
+                }           
             }
-            //echo '<br>Function in the position ' . $r[$i] . ' have a size of ' .( $r[$i + 1] - $r[$i]) .' lines';    
-            //echo '<br> and a total of ' . $counter . ' comments.';
-        }
-        
+        }   
     }
     
     public function setPositionProportion(){
@@ -374,6 +369,16 @@ Class CommentCheck {
         return $this->errors;
     }
 
+    public function setNumberComments($numbercomments) {
+        
+        $this->NumberComments = $numbercomments;
+    }
+    
+    public function getNumberComments(){
+        
+        return $this->NumberComments;
+    }
+            
     public function setTags($tags) {
 
         $this->tags = $tags;
