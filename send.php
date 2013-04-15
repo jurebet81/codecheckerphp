@@ -28,7 +28,8 @@ include 'CommentCheckClass.php';
 				
 	}else{
 	$vectorparams =$_POST['checks'];
-	$codec = new CommentCheck($code,$vectorparams);
+	$numbercomments= $_POST['numbercomments'];
+	$codec = new CommentCheck($code,$vectorparams,$numbercomments);
 	$codec->verify();
         
 		
