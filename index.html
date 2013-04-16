@@ -11,11 +11,12 @@
 					<h1><span>CODE COMMENTS CHECKER</span></h1>
 				</div>
 				<div id="result">
-					<form method="post" action="send.php" enctype="multipart/form-data" name="form1">
+					<form method="post" action="send.php" enctype="multipart/form-data" name="form1" >
 						<fieldset>
 							<legend>Select file from your computer</legend>
-							<input type="file" name="file" id="file" />
+							<input type="file" name="file" id="file" onchange="filechange(this)"/>
 							<input type="submit" value="Send" name="submitfile"  />
+							<div id="inputFileError"></div>
 						</fieldset>
 						<p>Or </p>
 						<fieldset>
@@ -27,11 +28,12 @@
 						<fieldset>
 							<legend> Options </legend>
 								<div>
-									<input type="checkbox" name="checks[]" value="author" />Tag author 
-									<input type="checkbox" name="checks[]" value="return" />Tag return <br>
-									<input type="checkbox" name="checks[]" value="title" />Title
-									<input type="checkbox" name="checks[]" value="param" />Param
+									<input type="checkbox" name="checks[]" value="author"  />Tag author 
+									<input type="checkbox" name="checks[]" value="return"  />Tag return <br>
+									<input type="checkbox" name="checks[]" value="title"  />Title
+									<input type="checkbox" name="checks[]" value="param"  />Param
 								</div>
+								<div id="tagsError"></div>
 						</fieldset>
 						<br>
 						<fieldset>
@@ -43,6 +45,8 @@
 				<div id="footer"> <a href="http://www.eia.edu.co" title="Universidad">Escuela de Ingenieria de Antioquia</a></div>
 			</div>
 		</div>
+		<script type="text/javascript" src="jquery-1.9.1.min.js" ></script>
+		<script type="text/javascript" src="index.js" ></script>
 	</body>
 </html>
 

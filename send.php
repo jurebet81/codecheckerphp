@@ -14,23 +14,28 @@ include 'CommentCheckClass.php';
  * Time: 9:36 PM
  * To change this template use File | Settings | File Templates.
  */
+	
     if (isset ( $_POST ['submitfile'] )) {
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
-                chmod($_FILES['file']['tmp_name'], 0444);
-                $code=file_get_contents($_FILES['file']['tmp_name']);
+		 
+				if($_FILES['file']['type'] == "application/php"){
+					chmod($_FILES['file']['tmp_name'], 0444);
+					$code=file_get_contents($_FILES['file']['tmp_name']);
+				}else{
+					exit;
+				}
         }
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
     }
 
 	if (empty ($_POST['checks'])) {			
-		echo("You must select at least one parameter");
 				
 	}else{
-	$vectorparams =$_POST['checks'];
-	$numbercomments= $_POST['numbercomments'];
-	$codec = new CommentCheck($code,$vectorparams,$numbercomments);
-	$codec->verify();
+		$vectorparams =$_POST['checks'];
+		$numbercomments= $_POST['numbercomments'];
+		$codec = new CommentCheck($code,$vectorparams,$numbercomments);
+		$codec->verify();
         
 		
 			
@@ -56,10 +61,7 @@ include 'CommentCheckClass.php';
 				 *<br>
 				 *<br>
 				 */<br>";
-         
-        
-
-		
+	
 }
 ?>
 </body>
