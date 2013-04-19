@@ -18,7 +18,7 @@ include 'CommentCheckClass.php';
     if (isset ( $_POST ['submitfile'] )) {
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
 		 
-				if($_FILES['file']['type'] == "application/php"){
+				if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
 					chmod($_FILES['file']['tmp_name'], 0444);
 					$code=file_get_contents($_FILES['file']['tmp_name']);
 				}else{
