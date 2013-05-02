@@ -5,7 +5,7 @@
 </body>			
 <?php
 include 'CommentCheckClass.php';
-
+include 'ReportErrorClass.php';
 
  /**
  * Created by JetBrains PhpStorm.
@@ -14,8 +14,26 @@ include 'CommentCheckClass.php';
  * Time: 9:36 PM
  * To change this template use File | Settings | File Templates.
  */
-	
-    if (isset ( $_POST ['submitfile'] )) {
+
+    function inverse($x) {
+        if (!$x) {
+            throw new Exception('Division by zero.');
+        }
+        else return 1/$x;
+    }
+
+    try {  //try de prueba para capturar errores
+        echo inverse(5) . "\n";
+        echo inverse(0) . "\n";
+    } catch (Exception $e) {
+        echo "hola";
+
+        $error = new ReportError($e);
+        //echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+
+
+if (isset ( $_POST ['submitfile'] )) {
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
 		 
 				if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
