@@ -5,6 +5,7 @@
 </body>			
 <?php
 include 'CommentCheckClass.php';
+include 'ReportErrorClass.php';
 
 
  /**
@@ -18,12 +19,12 @@ include 'CommentCheckClass.php';
     if (isset ( $_POST ['submitfile'] )) {
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
 		 
-				if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
+				//if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
 					chmod($_FILES['file']['tmp_name'], 0444);
 					$code=file_get_contents($_FILES['file']['tmp_name']);
-				}else{
-					exit;
-				}
+				//}else{
+					//exit;
+				//}
         }
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
@@ -54,6 +55,7 @@ include 'CommentCheckClass.php';
 		}else {
 			echo "The file is correctly commented";
 		}
+		
 		echo "<p>1.  The title tag if is being checked must be the first tag of the comment;</p>
 
 			2.  The correct structure of the comment is;<br>
