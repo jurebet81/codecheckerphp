@@ -38,7 +38,7 @@ class ReportError
     }
 
     public function  sendDevelopMail(){
-	include_once("class.phpmailer.php");
+	include_once("PHPMailer/class.phpmailer.php");
 	$mail = new PHPMailer();
 	$mail->IsSMTP(); // enable SMTP
 	$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
@@ -67,8 +67,8 @@ class ReportError
 
     private function sendBugTMail(){
 
-		include_once ('class.phpmailer.php');
-		include_once("class.smtp.php");
+		include_once ('PHPMailer/class.phpmailer.php');
+		include_once("PHPMailer/class.smtp.php");
 		$mail = new phpmailer();
 		$mail->PluginDir = "PHPMailer/";
 		$mail->Mailer = "smtp";
