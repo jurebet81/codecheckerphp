@@ -48,7 +48,8 @@ function inverse($x){
 	if (empty ($_POST['checks'])) {			
 				
 	}else{
-		$vectorparams =$_POST['checks'];
+
+	$vectorparams =$_POST['checks'];
 		$numbercomments= $_POST['numbercomments'];
 		$codec = new CommentCheck($code,$vectorparams,$numbercomments);
 		$codec->verify();
@@ -75,6 +76,7 @@ function inverse($x){
 				}
 				echo "</ul>";
 		}else {
+			echo "<br>";
 			echo "The file is correctly commented";
 		}
 		echo "<p>1.  The title tag if is being checked must be the first tag of the comment;</p>
