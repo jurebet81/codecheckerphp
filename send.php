@@ -32,6 +32,7 @@ include 'CommentCheckClass.php';
 					chmod($_FILES['file']['tmp_name'], 0444);
 					$code=file_get_contents($_FILES['file']['tmp_name']);
 				}else{
+					echo 'Incorrect file.you must upload a php file';
 					exit;
 				}
         }}

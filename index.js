@@ -7,7 +7,7 @@ $('form').submit(function (e){
 	}
 	else{
 		$("input[name=file]").val("");
-		document.getElementById("inputFileError").innerHTML = "Archivo incorrecto! Debe ser PHP";
+		document.getElementById("inputFileError").innerHTML = "Incorrect file.you must upload a php file";
 		validFile = false;
 		
 	}
