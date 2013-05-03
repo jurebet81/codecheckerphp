@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Code comments checker</title>
+        <link rel="stylesheet" href="diseno.css" type="text/css" />
+       
+    </head>
+	<body>
+		<div id="container">
+			<div id="intro">
+				<div id="pageHeader">
+					<h1><span>CODE COMMENTS CHECKER</span></h1>
+				</div>
+				<div id="result">
+					<form method="post" action="send.php" enctype="multipart/form-data" name="form1" >
+						<fieldset>
+							<legend>Select file from your computer</legend>
+							<input type="file" name="file" id="file" onchange="filechange(this)"/>
+							<input type="submit" value="Send" name="submitfile"  />
+							<div id="inputFileError"></div>
+						</fieldset>
+						<p>Or </p>
+						<fieldset>
+							<legend> Copy your code here </legend>
+							<textarea name="code" class="codearea"></textarea>
+							<input type="submit"  value="Send" name="submitcode" />
+						</fieldset>
+						<br><br>
+						<fieldset>
+							<legend> Options </legend>
+								<div>
+									<input type="checkbox" name="checks[]" value="author"  />Tag author 
+									<input type="checkbox" name="checks[]" value="return"  />Tag return <br>
+									<input type="checkbox" name="checks[]" value="title"  />Title
+									<input type="checkbox" name="checks[]" value="param"  />Param
+								</div>
+								<div id="tagsError"></div>
+						</fieldset>
+						<br>
+						<fieldset>
+							<legend>Type the number of comments to verify in each method </legend>
+							<input type="text" name="numbercomments" id="numbercomments" />
+						</fieldset>
+					</form>
+				</div>
+				<div id="footer"> <a href="http://www.eia.edu.co" title="Universidad">Escuela de Ingenieria de Antioquia</a></div>
+			</div>
+		</div>
+		 <script type="text/javascript" src="jquery-1.9.1.min.js" ></script>
+		<script type="text/javascript" src="index.js" ></script>
+	</body>
+</html>
+
+
