@@ -35,7 +35,7 @@ class ReportError
 	$mail->Password = "tecnicas123";
 	$mail->SetFrom('tecnicasavanzadaseia@gmail.com');
 	$mail->Subject = "Error in code checker aplication";
-	$mail->Body = $this->getAllInfoError;
+	$mail->Body = $this->getAllInfoError();
 	$mail->AddAddress('andreh2791@gmail.com');
 	if(!$mail->Send())
     {
@@ -51,6 +51,33 @@ class ReportError
 
     private function sendBugTMail(){
 
+		include_once ('class.phpmailer.php');
+		include_once("class.smtp.php");
+		$mail = new phpmailer();
+		$mail->PluginDir = "PHPMailer/";
+		$mail->Mailer = "smtp";
+		$mail->IsSMTP();
+		$mail->Host = "smtp.gmail.com";
+		$mail->Port = 587;
+		$mail->SMTPSecure = "tls";
+		$mail->SMTPAuth = true;
+		$mail->Username = "tecnicasavanzadaseia@gmail.com"; 
+		$mail->Password = "tecnicas123";
+		$mail->SetFrom ( "tecnicasavanzadaseia@gmail.com");
+		$mail->FromName = "Bug_reporter";
+		//$mail->Timeout=20;
+		$mail->AddAddress("cases@proyectotenicaseia.fogbugz.com");
+		$mail->Subject = "bug";
+		$mail->Body = $this->getAllInfoError();
+
+		 if(!$mail->Send()) {
+		  echo "Error: " . $mail->ErrorInfo;
+		} else {
+		  echo "Message has been sent";
+		}
+		
+	
+	
     }
 
     private function addLog(){
