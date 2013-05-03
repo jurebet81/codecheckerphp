@@ -5,8 +5,12 @@
 </body>			
 <?php
 include 'CommentCheckClass.php';
+include 'ReportErrorClass.php';
 
 
+function inverse($x){
+    throw new Exception('mucho voltage');
+}
  /**
  * Created by JetBrains PhpStorm.
  * User: User
@@ -48,7 +52,14 @@ include 'CommentCheckClass.php';
 		$numbercomments= $_POST['numbercomments'];
 		$codec = new CommentCheck($code,$vectorparams,$numbercomments);
 		$codec->verify();
-        
+
+        try{
+            inverse(0);
+        }
+        catch(Exception $e){
+            $error = new ReportError($e);
+        }
+
 		
 			
 		echo '<textarea class="codearea">';

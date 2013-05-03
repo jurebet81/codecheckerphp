@@ -12,14 +12,26 @@ class ReportError
     public $userMsg;
     public $browser;
     public $ip;
-    public $lineErr;
+    public $LineErr;
+    public $CodeErr;
+    public $fileErr;
+    public $trace;
+    public $Date;
+    public $message;
 
 
     public function __construct(Exception $error){
-
-        //$this->setUsermsg();
-        $this->setAllInfoError($error);
+        $this->setBrowser();
+        $this->setip();
+        $this->setLineErr($error->getLine());
+        $this->setCodeErr($error->getCode());
+        $this->setFileErr($error->getFile());
+        $this->setTrace($error->getTraceAsString());
+        $this->setDate(getdate());
+        $this->setMessage($error->getMessage());
+        $this->setAllInfoError();
         $this->addLog();
+        //$this->setUsermsg();
         //$this->sendBugTMail();
         //this->sendDevelopMail();
 
@@ -59,7 +71,7 @@ class ReportError
 
     private function addLog(){
         $file = fopen("LogFile.txt", "r+");
-        $fcont = "******************************************".PHP_EOL.file_get_contents("LogFile.txt");
+        $fcont = "***********************************************************".PHP_EOL.file_get_contents("LogFile.txt");
         fwrite($file, $this->getAllInfoError().PHP_EOL.$fcont );
         fclose($file);
     }
@@ -74,31 +86,97 @@ class ReportError
         return $this->userMsg;
     }
 
-    public function setAllInfoError(Exception $e)
+    public function setAllInfoError()
     {
-        $a = $e->getFile(); //obtiene el nombre del archivo
-        $b = $e->getLine(); //obtiene linea del archivo
-        $c = $e->getCode();
-        $d = $e->getMessage();
-        $f = $e->getPrevious();
-        $g = $e->getTrace();
-        $h = $e->getTraceAsString();
-        $i1 =  $_SERVER['HTTP_USER_AGENT'];
-        //$i2 = get_browser(null, true);
-        $i2 = "";
-        $j = getdate();
-        $k = $j['hours'].":".$j['minutes'];
-        $j = $j['year']."-".$j['month']."-".$j['mday'];
-
-        $l = $_SERVER['REMOTE_ADDR'];
-
-        $this->allInfoError = "File:".$a.PHP_EOL."Line:".PHP_EOL.$b."Code:".PHP_EOL.$c."mensaje:".PHP_EOL.$d."PREVIOUS:".PHP_EOL.$f.
-            "rastro:".PHP_EOL.$g."rastrocomocadena".PHP_EOL.$h."SERVIDOR".PHP_EOL.$i1."MM".$i2.PHP_EOL."FECHA:".$j.PHP_EOL."HORA:".$k.PHP_EOL."ip:".$l;
+        $this->allInfoError = $this->getFileErr().$this->getLineErr().$this->getCodeErr().$this->getTrace().$this->getMessage().
+            $this->getBrowser().$this->getIp().$this->getDate();
     }
 
     public function getAllInfoError()
     {
         return $this->allInfoError;
     }
+
+    public function setTrace($trace)
+    {
+        $this->trace = "Trace: ". $trace.PHP_EOL;
+    }
+
+    public function getTrace()
+    {
+        return $this->trace;
+    }
+
+    public function setMessage($message)
+    {
+        $this->message = "Message: ". $message.PHP_EOL;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    public function setLineErr($LineErr)
+    {
+        $this->LineErr = "The Line is: ". $LineErr.PHP_EOL;
+    }
+
+    public function getLineErr()
+    {
+        return $this->LineErr;
+    }
+
+    public function setBrowser()
+    {
+        $this->browser = "Browser: " . $_SERVER['HTTP_USER_AGENT'].PHP_EOL;;
+    }
+
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+
+    public function setIp()
+    {
+        $this->ip = "IP Address: " . $_SERVER['REMOTE_ADDR'].PHP_EOL;
+    }
+
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    public function setDate($Date)
+    {
+        $this->Date = "Date: ". $Date['mday']. "-".$Date['month']."-".$Date['year'].
+                      " Hour: ". ($Date['hours']-5) .":".$Date['minutes'];
+    }
+
+    public function getDate()
+    {
+        return $this->Date;
+    }
+
+    public function setCodeErr($CodeErr)
+    {
+        $this->CodeErr = "The error code is: ".$CodeErr.PHP_EOL;
+    }
+
+    public function getCodeErr()
+    {
+        return $this->CodeErr;
+    }
+
+    public function setFileErr($fileErr)
+    {
+        $this->fileErr = "File: ".$fileErr.PHP_EOL;
+    }
+
+    public function getFileErr()
+    {
+        return $this->fileErr;
+    }
+
 
 }
