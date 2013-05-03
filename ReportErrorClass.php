@@ -6,6 +6,13 @@
  * Time: 12:55 PM
  *
  */
+
+
+/**
+ * Include/require zone 
+ **/
+require_once("./phpmailer/class.phpmailer.php");
+
 class ReportError
 {
     public $allInfoError;
@@ -22,7 +29,6 @@ class ReportError
     }
 
     public function  sendDevelopMail(){
-	include_once("class.phpmailer.php");
 	$mail = new PHPMailer();
 	$mail->IsSMTP(); // enable SMTP
 	$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
