@@ -65,6 +65,7 @@ include 'CommentCheckClass.php';
 				}
 				echo "</ul>";
 		}else {
+			echo "<br>";
 			echo "The file is correctly commented";
 		}
 		echo "<p>1.  The title tag if is being checked must be the first tag of the comment;</p>
