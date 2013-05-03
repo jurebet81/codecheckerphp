@@ -5,7 +5,7 @@
 </body>			
 <?php
 include 'CommentCheckClass.php';
-include 'ReportErrorClass.php';
+
 
  /**
  * Created by JetBrains PhpStorm.
@@ -14,38 +14,32 @@ include 'ReportErrorClass.php';
  * Time: 9:36 PM
  * To change this template use File | Settings | File Templates.
  */
-
-    function inverse($x) {
-        if (!$x) {
-            throw new Exception('Division by zero.');
-        }
-        else return 1/$x;
-    }
-
-    try {  //try de prueba para capturar errores
-        echo inverse(5) . "\n";
-        echo inverse(0) . "\n";
-    } catch (Exception $e) {
-        echo "hola";
-
-        $error = new ReportError($e);
-        //echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
-
-
-if (isset ( $_POST ['submitfile'] )) {
+	
+    if (isset ( $_POST ['submitfile'] )) {
+	
+		if ($_FILES["file"]["error"] > 0){
+			echo 'subio mal';
+			}else{
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
-		 
-				if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
+		 //var_dump($_FILES ['file']);
+				//if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
+				 
+				$name=($_FILES ['file'] ['name'] );
+			
+				$fileExtension = substr($name,strrpos( $name, '.' )+1);
+				
+				if ($fileExtension == "php"){
 					chmod($_FILES['file']['tmp_name'], 0444);
 					$code=file_get_contents($_FILES['file']['tmp_name']);
 				}else{
+					echo 'Incorrect file.you must upload a php file';
 					exit;
 				}
-        }
+        }}
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
-    }
+    
+}
 
 	if (empty ($_POST['checks'])) {			
 				
