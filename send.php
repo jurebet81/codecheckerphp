@@ -16,18 +16,29 @@ include 'CommentCheckClass.php';
  */
 	
     if (isset ( $_POST ['submitfile'] )) {
+	
+		if ($_FILES["file"]["error"] > 0){
+			echo 'subio mal';
+			}else{
          if (isset ( $_FILES ['file'] ) && is_uploaded_file ( $_FILES ['file'] ['tmp_name'] )) {
-		 
-				if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
+		 //var_dump($_FILES ['file']);
+				//if($_FILES['file']['type'] == "application/php"||$_FILES['file']['type'] == "text/php"){
+				 
+				$name=($_FILES ['file'] ['name'] );
+			
+				$fileExtension = substr($name,strrpos( $name, '.' )+1);
+				
+				if ($fileExtension == "php"){
 					chmod($_FILES['file']['tmp_name'], 0444);
 					$code=file_get_contents($_FILES['file']['tmp_name']);
 				}else{
 					exit;
 				}
-        }
+        }}
     }else if (($_POST['submitcode'] )) {
             $code = $_POST['code'];
-    }
+    
+}
 
 	if (empty ($_POST['checks'])) {			
 				

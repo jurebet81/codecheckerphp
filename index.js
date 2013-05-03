@@ -1,23 +1,33 @@
-function filechange(input){
-	var filestring = input.value;
+$('form').submit(function (e){
+	var validFile = true;
+	var filestring = $("input[name=file]").val();
 	var fileExtension = filestring.substr(filestring.lastIndexOf(".") + 1);
 	if (fileExtension == "php"){
 		document.getElementById("inputFileError").innerHTML = "";
 	}
 	else{
-		input.value = "";
+		$("input[name=file]").val("");
 		document.getElementById("inputFileError").innerHTML = "Archivo incorrecto! Debe ser PHP";
+		validFile = false;
+		
 	}
-}
-$('form').submit(function (e){
+	var validCheckbox = false;
 	var checkboxes = document.getElementsByName("checks[]");
 	for (var i = 0; i < checkboxes.length; i++){
 		if(checkboxes[i].checked){
-			return true;
+			validCheckbox = true;
+			break;
 		}
 	}
-	document.getElementById("tagsError").innerHTML = "You must select at least one parameter";
-	e.preventDefault();
-	return false;
+	if (validCheckbox == false){
+		document.getElementById("tagsError").innerHTML = "You must select at least one parameter";
+	}
+	
+	if (validCheckbox == false || validFile == false){
+		e.preventDefault();
+		return false;
+	}
+	else{
+		return true;
+	}
 });
-
