@@ -1,0 +1,70 @@
+File:C:\wamp\www\codecheckerphp\send.php
+Line:
+20Code:
+0mensaje:
+Division by zero.PREVIOUS:
+rastro:
+Arrayrastrocomocadena
+#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}SERVIDOR
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31MM
+FECHA:2013-May-2
+HORA:18:16
+ip:127.0.0.1
+******************************************
+File:C:\wamp\www\codecheckerphp\send.php
+Line:
+20Code:
+0mensaje:
+Division by zero.PREVIOUS:
+rastro:
+Arrayrastrocomocadena
+#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}SERVIDOR
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31MM
+FECHA:2013-May-2
+HORA:2:2
+ip:127.0.0.1
+******************************************
+File:C:\wamp\www\codecheckerphp\send.php
+Line:
+20Code:
+0mensaje:
+Division by zero.PREVIOUS:
+rastro:
+Arrayrastrocomocadena
+#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}SERVIDOR
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31MM
+FECHA2013
+HORA
+Arrayip
+127.0.0.1
+******************************************
+File:C:\wamp\www\codecheckerphp\send.php
+Line:
+20Code:
+0mensaje:
+Division by zero.PREVIOUS:
+rastro:
+Arrayrastrocomocadena
+#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}SERVIDOR
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31MM
+FECHA
+ArrayHORA
+Arrayip
+127.0.0.1
+******************************************
+C:\wamp\www\codecheckerphp\send.php--20--0--Division by zero.----Array--#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}--Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31----Array--Array--127.0.0.1
+******************************************
+C:\wamp\www\codecheckerphp\send.php--20--0--Division by zero.----Array--#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}--Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31----Array--Array--127.0.0.1
+******************************************
+C:\wamp\www\codecheckerphp\send.php--20--0--Division by zero.----Array--#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}--Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31----Array--Array--127.0.0.1
+******************************************
+C:\wamp\www\codecheckerphp\send.php--20--0--Division by zero.----Array--#0 C:\wamp\www\codecheckerphp\send.php(27): inverse(0)
+#1 {main}----Array--Array--127.0.0.1
+******************************************
