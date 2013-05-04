@@ -48,6 +48,9 @@ Class CommentCheck {
         $this->setTags($tags);
         $this->setPositionProportion();
         $this->setNumberComments($numbercomments);
+        if ($this->getNumTimes() < 1 ){
+            $this->setErrors("The File does not have php code, it can not be checked");
+        }
     }
 
     /**

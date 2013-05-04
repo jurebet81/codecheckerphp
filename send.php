@@ -52,7 +52,14 @@ function inverse($x){
 	$vectorparams =$_POST['checks'];
 		$numbercomments= $_POST['numbercomments'];
 		$codec = new CommentCheck($code,$vectorparams,$numbercomments);
-		$codec->verify();
+        $errorscode = sizeof($codec->getErrors());
+        if ($errorscode > 1){
+            foreach($codec->getErrors() as $codeError){
+                echo $codeError ."\n" ;
+            }
+        }else{
+
+        $codec->verify();
 
         try{
             inverse(0);
@@ -61,8 +68,6 @@ function inverse($x){
             $error = new ReportError($e);
         }
 
-		
-			
 		echo '<textarea class="codearea">';
 				foreach($codec->getCodeArray() as $codeArray){
 					echo $codeArray ."\n" ;
@@ -79,10 +84,11 @@ function inverse($x){
 			echo "<br>";
 			echo "The file is correctly commented";
 		}
+        }
 		echo "<p>1.  The title tag if is being checked must be the first tag of the comment;</p>
 
 			2.  The correct structure of the comment is;<br>
-				/** <br>
+				 /** <br>
 				 *<br>
 				 *<br>
 				 */<br>";
