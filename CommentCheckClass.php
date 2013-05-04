@@ -26,7 +26,6 @@ Class CommentCheck {
     private $tags;
     private $bottom;
     private $positionProportion;
-
     private $spaces;
     private $lineArray;
     private $numCharactersLine;
@@ -34,9 +33,11 @@ Class CommentCheck {
 
    /**
     * constructor
-    * @author Julian
+    * @authr Julian
     * Gets the code as a string and calls the method to put it into an array
     * Calls the method to find how many classes and methods there are in the php file
+    *
+    *
     *
     * @param (string)($code)
     */

@@ -14,7 +14,8 @@ include 'SortFilesClass.php';
     $totMessages = sizeof ($sortFiles->getMessages());
     if ( $totMessages == 0){
         for ( $i = 0; $i < $sortFiles->getTotPhpFiles(); $i++){
-            $ccode = new CommentCheck( file_get_contents( $sortFiles->getDirPath() .$sortFiles->filePhpArray[$i]), $sortFiles->getTags());
+            $ccode = new CommentCheck( file_get_contents( $sortFiles->getDirPath() .$sortFiles->filePhpArray[$i]),
+                $sortFiles->getTags(), $sortFiles->getProportion());
             $ccode->verify();
             $totErrors = sizeof($ccode->getErrors());
             if ( $totErrors > 0){
@@ -33,13 +34,14 @@ include 'SortFilesClass.php';
             echo "\n Error: " . $messages[$i];
         }
         $help = "ccode.php \n
-            Sintax: php path/ccode.php [a | r | t | p] [f | d] PathOfDirectoryOrFile.php \n\n
+            Sintax: php path/ccode.php [a | r | t | p] [n] [f | d] PathOfDirectoryOrFile.php \n\n
             a:  check autor tag \n
             r:  check return tag \n
             t:  check title tag \n
-            p:  check param tag \n \n
+            p:  check param tag \n
+            n:  Check proportion of code commented \n
             f:  check specific files \n
-            d:  check by a specific directory \n\n
+            d:  check by a specific directory \n
             Example: php C:\\wamp\\www\\ccode.php art f codetobechecked.php";
         echo $help;
     }

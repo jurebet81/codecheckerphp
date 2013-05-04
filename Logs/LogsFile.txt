@@ -1,0 +1,80 @@
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:38
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:37
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:11
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:8
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:4
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:1
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -2:1
+***********************************************************
+File: C:\wamp\www\codecheckerphp\send.php
+The Line is: 12
+The error code is: 0
+Trace: #0 C:\wamp\www\codecheckerphp\send.php(65): inverse(0)
+#1 {main}
+Message: mucho voltage
+Browser: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31
+IP Address: 127.0.0.1
+Date: 4-May-2013 Hour: -3:58
+***********************************************************

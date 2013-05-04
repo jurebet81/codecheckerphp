@@ -18,6 +18,7 @@ class SortFiles
     private $messages;
     private $arguments;
     private $totArguments;
+    private $proportion;
 
     /**
      * Constructor
@@ -34,6 +35,7 @@ class SortFiles
         $this->setFileArray("");
         $this->setTotPhpFiles(0);
         $this->setTotArguments(sizeof($args));
+        $this->setProportion($args[2]);
     }
 
     /**
@@ -44,11 +46,11 @@ class SortFiles
      */
 
     public function startSorting(){
-        if ( $this->getTotArguments() > 3){
+        if ( $this->getTotArguments() > 4){
             $this->sortTags($this->arguments[1]);
-            if ( $this->arguments[2] == "f"){
+            if ( $this->arguments[3] == "f"){
                 $this->orderByFiles( $this->getArguments());
-            } else if ( $this->arguments[2] == "d") {
+            } else if ( $this->arguments[3] == "d") {
                 $this->orderByDirectory( $this->getArguments());
             }else {
                 $this->setMessages("Parameters are not valid");
@@ -98,12 +100,12 @@ class SortFiles
      */
 
     private function orderByDirectory($directory){
-        if ( is_dir( $directory[3])){
-            $this->setDirPath( $directory[3] . "/");
+        if ( is_dir( $directory[4])){
+            $this->setDirPath( $directory[4] . "/");
             $this->loadAllFiles( $this->getDirPath());
             $this->loadPhpFiles( $this->getFileArray());
         }else{
-            $this->setMessages( $directory[3] . " is not a directory") ;
+            $this->setMessages( $directory[4] . " is not a directory") ;
         }
     }
 
@@ -119,7 +121,7 @@ class SortFiles
     private function orderByFiles($files){
         $this->setDirPath("");
         $filesAux = "";
-        for ( $i = 3; $i < $this->getTotArguments(); $i++){
+        for ( $i = 4; $i < $this->getTotArguments(); $i++){
             if ( is_file( $files[$i])) {
                 $filesAux[] = $files[$i];
             }else{
@@ -251,4 +253,15 @@ class SortFiles
     {
         return $this->tags;
     }
+
+    public function setProportion($proportion)
+    {
+        $this->proportion = $proportion;
+    }
+
+    public function getProportion()
+    {
+        return $this->proportion;
+    }
+
 }

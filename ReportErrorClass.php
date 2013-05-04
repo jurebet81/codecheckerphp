@@ -97,8 +97,8 @@ class ReportError
     }
 
     private function addLog(){
-        $file = fopen("LogFile.txt", "r+");
-        $fcont = "***********************************************************".PHP_EOL.file_get_contents("LogFile.txt");
+        $file = fopen("Logs/LogsFile.txt", "r+");
+        $fcont = "***********************************************************".PHP_EOL.file_get_contents("Logs/LogsFile.txt");
         fwrite($file, $this->getAllInfoError().PHP_EOL.$fcont );
         fclose($file);
     }
