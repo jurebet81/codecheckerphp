@@ -2,12 +2,13 @@ $('form').submit(function (e){
 	var validFile = true;
 	var filestring = $("input[name=file]").val();
 	var fileExtension = filestring.substr(filestring.lastIndexOf(".") + 1);
+
 	if (fileExtension == "php"){
 		document.getElementById("inputFileError").innerHTML = "";
 	}
 	else{
 		$("input[name=file]").val("");
-		document.getElementById("inputFileError").innerHTML = "Incorrect file.you must upload a php file";
+		document.getElementById("inputFileError").innerHTML = "*Incorrect file, You must upload a php file";
 		validFile = false;
 		
 	}
@@ -20,7 +21,7 @@ $('form').submit(function (e){
 		}
 	}
 	if (validCheckbox == false){
-		document.getElementById("tagsError").innerHTML = "You must select at least one parameter";
+		document.getElementById("tagsError").innerHTML = "*You must select at least one parameter";
 	}
 	
 	if (validCheckbox == false || validFile == false){

@@ -1,83 +1,90 @@
-
-html {
-	margin: 0;
-	padding: 0;
-	background-color:white;
-	color: rgb(1,43,127);
-	}
-body { 
-	font: 75% georgia, sans-serif;
-	margin: 30; 
-	padding: 30;
-	}
-/* specific divs */
-#container { 
-	/*background: url(zen-bg.jpg) no-repeat top left; */
-	background-color:yellow;
-	/*padding: 48px 175px 0 130px;  */
-	margin: 10px auto;
-	width: 1000px;
-	position: relative;
-	}
-
-#intro { 
-	min-width: 970px;
-	background : white;
-    }
-
-#pageHeader h1 { 
-	/*background:*/rgb(1,43,127); azul eia
-	margin-top: -20px; 
-	width: 1001px; 
-	height: 100px; 
-	float: left;
-	}
-#pageHeader h1 span {
-	font-size : 36pt;
-    font-family : verdana,arial;
-    text-align : center;
-    background-color : white;
-	}
+body {
+    color            : rgb(1,43,127);
+    background-color : #fff;
+    background-image : url('../images/back.png');
+}
 
 #pageHeader {
-	padding-top: 20px;
+    width              : 71%;
+    min-height         : 140px;
+    margin             : 0 auto;
+    background-image   : url('../images/logo.png');
+    background-repeat  : no-repeat;
+    background-position: left top;
+    background-size    : 180px 140px;
+    line-height        : 80%;
+    font-family        : verdana;
+    color              : #F0F0F0;
+    padding-top        : 1px;
+    text-align         : center;
 }
+
+#pageHeader h1 span {
+	font-size : 33pt;
+}
+
+#container {
+    width           : 77%;
+    margin          : 0 auto;
+    background-color: #F0F0F0;
+    overflow        : hidden;
+    font-family     : helvetica, verdana;
+    min-height      : 580px;
+    padding-top     : 20px;
+    padding-left    : 40px;
+    padding-right   : 40px;
+}
+
+#contleft{
+    float           : left;
+    width           : 50%;
+    font-size       : 12pt;
+}
+
+#contright{
+    float           : right;
+    width           : 40%;
+}
+
 #quickSummary {
-	clear:both; 
-	margin: 20px 20px 20px 166px; 
-	width: 600px; 
-	}
+	clear           : both;
+	margin          : 20px 20px 20px 166px;
+	width           : 600px;
+}
+
 #quickSummary p {
-	font: italic 10pt/22pt georgia; 
-	text-align:center;
-	font-size : 10pt;
-    background-color : white;
-	}
-#result{
-    font-size : 12pt;
-    font-family : verdana,arial;
-	padding-top: 20px;
-	padding-left: 0px;
-	padding-right: 50px;
-	background-color : white;
+	font            : italic 10pt/22pt georgia;
+	text-align      : center;
+	font-size       : 10pt;
+    background-color: white;
 }
-#result fieldset{
-    border:1px solid rgb(119,119,119);
-    font-size : 12pt;
-    font-family : verdana,arial;
+
+#container fieldset {
+    border          : 1px solid rgb(119,119,119);
+    font-size       : 16pt;
+    font-family     : verdana,arial;
+    border-width    : 5px;
 }
+
 #result input {
-    font-size : 12pt;
-    font-family : verdana,arial;
+    font-size       : 12pt;
+    font-family     : verdana,arial;
 }
 
 #footer { 
-	text-align: center; 
-	margin-top: 300px;
-	}
+	text-align      : center;
+	margin-top      : 300px;
+}
+
 .codearea {
-	width:900px;
-	height:250px;
-	border: 2px solid #cccccc;; 
-	
-	}
+    resize          : none;
+	width           : 500px;
+	height          : 400px;
+	border          : 2px solid #cccccc;;
+}
+
+#tagsError, #inputFileError {
+    font-size       : 15pt;
+    font-family     : verdana,arial;
+    color           : red;
+}

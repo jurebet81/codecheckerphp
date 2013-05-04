@@ -177,7 +177,7 @@ class ReportError
     public function setDate($Date)
     {
         $this->Date = "Date: ". $Date['mday']. "-".$Date['month']."-".$Date['year'].
-                      " Hour: ". ($Date['hours']-5) .":".$Date['minutes'];
+                      " Hour: ". $Date['hours'] .":".$Date['minutes'];
     }
 
     public function getDate()
