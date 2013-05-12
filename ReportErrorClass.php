@@ -32,36 +32,36 @@ class ReportError
         $this->setAllInfoError();
         $this->addLog();
         //$this->setUsermsg();
-        //$this->sendBugTMail();
-        //this->sendDevelopMail();
+        $this->sendBugTMail();
+        $this->sendDevelopMail();
 
     }
 
     public function  sendDevelopMail(){
-	include_once("PHPMailer/class.phpmailer.php");
-	$mail = new PHPMailer();
-	$mail->IsSMTP(); // enable SMTP
-	$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-	$mail->SMTPAuth = true; // authentication enabled
-	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-	$mail->Host = "smtp.gmail.com";
-	$mail->Port = 465; // or 587
-	$mail->IsHTML(true);
-	$mail->Username = "tecnicasavanzadaseia@gmail.com";
-	$mail->Password = "tecnicas123";
-	$mail->SetFrom('tecnicasavanzadaseia@gmail.com');
-	$mail->Subject = "Error in code checker aplication";
-	$mail->Body = $this->getAllInfoError();
-	$mail->AddAddress('andreh2791@gmail.com');
-	if(!$mail->Send())
-    {
-    echo "Mailer Error: " . $mail->ErrorInfo;
-    }
-    else
-    {
-    echo "Message has been sent";
-    }
-	
+        include_once("PHPMailer/class.phpmailer.php");
+        $mail = new PHPMailer();
+        $mail->IsSMTP(); // enable SMTP
+        $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPAuth = true; // authentication enabled
+        $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465; // or 587
+        $mail->IsHTML(true);
+        $mail->Username = "tecnicasavanzadaseia@gmail.com";
+        $mail->Password = "tecnicas123";
+        $mail->SetFrom('tecnicasavanzadaseia@gmail.com');
+        $mail->Subject = "Error in code checker aplication";
+        $mail->Body = $this->getAllInfoError();
+        $mail->AddAddress('andreh2791@gmail.com');
+        if(!$mail->Send())
+        {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        }
+        else
+        {
+        echo "Message has been sent";
+        }
+
 
     }
 
@@ -103,13 +103,11 @@ class ReportError
         fclose($file);
     }
 
-    public function setUserMsg()
-    {
+    public function setUserMsg(){
         $this->userMsg = "This is embarrassing....";
     }
 
-    public function getUserMsg()
-    {
+    public function getUserMsg(){
         return $this->userMsg;
     }
 
