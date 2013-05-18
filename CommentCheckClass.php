@@ -228,11 +228,16 @@ Class CommentCheck {
                     }
                 }
                 if ($tagArray[$j] == 'param') {
-                    for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
-                        if ((preg_match('/([\s]*)[\s]((param)|(Param)|(@param))(:)?.+/', $this->codeArray[$m]))) {
+                    if(preg_match('/(\((\$).+)\){1}/', $this->codeArray[$this->bottom])){
+						for ($m = $this->getPosition(); $m < $this->bottom; $m++) {
+							if (preg_match('/([\s]*)[\s]((param)|(Param)|(@param))(:)?.+/', $this->codeArray[$m])) {
                             $contParam = 1;
-                        }
-                    }
+							}
+						}
+                    }else{
+					       $contParam = 1;
+					}
+					
                     if ($contParam == 0) {
                         $this->setErrors('The comment does not have param tag.  Comment => ' . $this->codeArray[($this->bottom)]);
                     }
